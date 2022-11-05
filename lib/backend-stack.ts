@@ -1,16 +1,65 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { CfnOutput } from "aws-cdk-lib";
+import { CloudFrontWebDistribution } from "aws-cdk-lib/aws-cloudfront";
+
+import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import { Construct } from "constructs";
+import { join } from "path";
+import { LambdaCreator } from "./utils/lambda-cretor";
 
 export class HrApptack extends cdk.Stack {
+  private suffix: string;
+
+  private deploymentBucket: Bucket;
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+    this.initializeSuffix();
 
-    // The code that defines your stack goes here
-
-    // example resource
-    const queue = new sqs.Queue(this, 'HrAppBackendQueue', {
-      visibilityTimeout: cdk.Duration.seconds(300)
+    new LambdaCreator({
+      scope: this,
+      id: "hello-world",
     });
+
+    const bucketName = "hr-app-client-ui" + this.suffix;
+
+    this.deploymentBucket = new Bucket(this, "hr-app-client-ui", {
+      bucketName: bucketName,
+      publicReadAccess: true,
+      websiteIndexDocument: "index.html",
+    });
+ 
+    new BucketDeployment(this, "hr-app-client-ui-deployment", {
+      destinationBucket: this.deploymentBucket,
+      sources: [Source.asset(join(__dirname, "..", "..", "app","frontend","client-ui","build"))],
+    });
+    const cloudFront = new CloudFrontWebDistribution(
+      this,
+      "hr-app-client-ui-distribution",
+      {
+        originConfigs: [
+          {
+            behaviors: [
+              {
+                isDefaultBehavior: true,
+              },
+            ],
+            s3OriginSource: {
+              s3BucketSource: this.deploymentBucket,
+            },
+          },
+        ],
+      }
+    );
+
+    new CfnOutput(this, "spaceFinderWebAppCloudFrontUrl", {
+      value: cloudFront.distributionDomainName,
+    });
+  }
+
+  private initializeSuffix() {
+    const shortStackId = cdk.Fn.select(2, cdk.Fn.split("/", this.stackId));
+    const Suffix = cdk.Fn.select(4, cdk.Fn.split("-", this.stackId));
+    this.suffix = Suffix;
   }
 }
