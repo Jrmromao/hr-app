@@ -28,12 +28,8 @@ export class HrApptack extends cdk.Stack {
       publicReadAccess: true,
       websiteIndexDocument: "index.html",
     });
- 
-    new BucketDeployment(this, "hr-app-client-ui-deployment", {
-      destinationBucket: this.deploymentBucket,
-      sources: [Source.asset(join(__dirname, "..", "..", "app","frontend","client-ui","build"))],
-    });
-    const cloudFront = new CloudFrontWebDistribution(
+
+    const hrAppCloudFront = new CloudFrontWebDistribution(
       this,
       "hr-app-client-ui-distribution",
       {
@@ -52,8 +48,19 @@ export class HrApptack extends cdk.Stack {
       }
     );
 
-    new CfnOutput(this, "spaceFinderWebAppCloudFrontUrl", {
-      value: cloudFront.distributionDomainName,
+    new BucketDeployment(this, "hr-app-client-ui-deployment", {
+      destinationBucket: this.deploymentBucket,
+      sources: [
+        Source.asset(
+          join(__dirname, "..", "..", "app", "frontend", "client-ui", "build")
+        ),
+      ],
+      distribution: hrAppCloudFront,
+      distributionPaths: ["/*"],
+    });
+
+    new CfnOutput(this, "hrAppWebAppCloudFrontUrl", {
+      value: hrAppCloudFront.distributionDomainName,
     });
   }
 
