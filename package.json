@@ -5,6 +5,8 @@
     "backend": "bin/backend.js"
   },
   "scripts": {
+    "build-ui":"sh ./scripts/build-client.sh",
+    "cdk-deploy": "npm run build-ui && cdk deploy",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
