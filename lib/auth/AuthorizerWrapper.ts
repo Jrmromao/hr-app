@@ -2,7 +2,7 @@ import { CfnOutput } from "aws-cdk-lib";
 import { CognitoUserPoolsAuthorizer, RestApi } from "aws-cdk-lib/aws-apigateway";
 import { UserPool, UserPoolClient, CfnUserPoolGroup } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
-import { Policies } from "../utils/Policies";
+import { Policies } from "../Policies";
 import { IdentityPoolWrapper } from './IdentityPoolWrapper';
 
 
@@ -33,8 +33,8 @@ export class AuthorizerWrapper {
     }
 
     private createUserPool(){
-        this.userPool = new UserPool(this.scope, 'SpaceUserPool', {
-            userPoolName: 'SpaceUserPool',
+        this.userPool = new UserPool(this.scope, 'HRAppUserPool', {
+            userPoolName: 'HRAppUserPool',
             selfSignUpEnabled: true,
             signInAliases: {
                 username: true,
@@ -47,8 +47,8 @@ export class AuthorizerWrapper {
     }
 
     private addUserPoolClient(){
-        this.userPoolClient = this.userPool.addClient('SpaceUserPool-client', {
-            userPoolClientName: 'SpaceUserPool-client',
+        this.userPoolClient = this.userPool.addClient('HRAppUserPool-client', {
+            userPoolClientName: 'HRAppUserPool-client',
             authFlows: {
                 adminUserPassword: true,
                 custom: true,
@@ -63,9 +63,9 @@ export class AuthorizerWrapper {
     }
 
     private createAuthorizer(){
-        this.authorizer = new CognitoUserPoolsAuthorizer(this.scope, 'SpaceUserAuthorizer', {
+        this.authorizer = new CognitoUserPoolsAuthorizer(this.scope, 'HRAppUserAuthorizer', {
             cognitoUserPools: [this.userPool],
-            authorizerName: 'SpaceUserAuthorizer',
+            authorizerName: 'HRAppUserAuthorizer',
             identitySource: 'method.request.header.Authorization'
         });
         this.authorizer._attachToApi(this.api);

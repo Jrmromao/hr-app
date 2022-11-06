@@ -5,4 +5,4 @@ cd frontend/client-ui
 rm -r build
 npm run build
 
-echo 'Production build has finished...'
+echo 'Finished building optimized production build...'
