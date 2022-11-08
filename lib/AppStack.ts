@@ -19,7 +19,7 @@ export class AppStack extends cdk.Stack {
   private deploymentBucket: Bucket;
   private documentBucket: Bucket;
   
-  private api = new RestApi(this, "AppApi");
+  private api = new RestApi(this, "HRAppAPI");
   private authorizer: AuthorizerWrapper;
   private policies: Policies;
 
@@ -36,7 +36,7 @@ export class AppStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     this.initializeSuffix();
-    this.initializeSpacesPhotosBucket();
+    this.initializeDocumentBucket();
 
 
     const bucketName = "hr-app-client-ui" + this.suffix;
@@ -117,7 +117,8 @@ export class AppStack extends cdk.Stack {
     );
     reservationResource.addMethod(
       "GET",
-      this.employeeTable.readLambdaIntegration
+      this.employeeTable.readLambdaIntegration,
+      optionsWithAuthorizer
     );
     reservationResource.addMethod(
       "PUT",
@@ -137,7 +138,7 @@ export class AppStack extends cdk.Stack {
     this.suffix = Suffix;
   }
 
-  private initializeSpacesPhotosBucket() {
+  private initializeDocumentBucket() {
     this.documentBucket = new Bucket(this, `document-bucket-${config.environment}`, {
         bucketName: `document-bucket-${this.suffix}`,
         cors: [{

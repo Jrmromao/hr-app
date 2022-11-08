@@ -1,7 +1,12 @@
+import os
+
 
 def main(event, _):
+  json_region = os.environ['AWS_REGION']
   return {
-      'status_code': 200,
-      'message': 'Read lambda'
-
+      "statusCode": 200,
+      "headers": {
+          "Content-Type": "application/json"
+      },
+      "body": 'Hello from Read lambda!'
   }

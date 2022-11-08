@@ -23,7 +23,7 @@ async function callStuff() {
     config.TEST_USER_NAME,
     config.TEST_USER_PASSWORD
   );
-  // await authService.getAWSTemporaryCreds(user);
+  await authService.getAWSTemporaryCreds(user);
   const someCreds = AWS.config.credentials;
  
  
