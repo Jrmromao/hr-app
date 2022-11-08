@@ -1,7 +1,7 @@
 import { CfnOutput } from "aws-cdk-lib";
 import { CfnIdentityPool, CfnIdentityPoolRoleAttachment, UserPool, UserPoolClient } from "aws-cdk-lib/aws-cognito";
 import { FederatedPrincipal, Role } from "aws-cdk-lib/aws-iam";
-import { Policies } from '../utils/Policies'
+import { Policies } from '../Policies'
 import { Construct } from "constructs";
  
 
@@ -35,7 +35,7 @@ export class IdentityPoolWrapper {
     }
 
     private initializeIdentityPool() {
-        this.identityPool = new CfnIdentityPool(this.scope, 'SpaceFinderIdentityPool', {
+        this.identityPool = new CfnIdentityPool(this.scope, 'HrAppIdentityPool', {
             allowUnauthenticatedIdentities: true,
             cognitoIdentityProviders: [{
                 clientId: this.userPoolClient.userPoolClientId,
@@ -43,11 +43,13 @@ export class IdentityPoolWrapper {
             }]
         });
         new CfnOutput(this.scope, 'IdentityPoolId', {
+     
             value: this.identityPool.ref
         })
     }
 
     private initializeRoles() {
+        
         this.authenticatedRole = new Role(this.scope, 'CognitoDefaultAuthenticatedRole', {
             assumedBy: new FederatedPrincipal('cognito-identity.amazonaws.com', {
                 StringEquals: {
@@ -60,7 +62,7 @@ export class IdentityPoolWrapper {
                 'sts:AssumeRoleWithWebIdentity'
             )
         });
-        this.authenticatedRole.addToPolicy(this.policies.uploadProfilePhoto);
+        this.authenticatedRole.addToPolicy(this.policies.uploadDocument);
 
         this.unAuthenticatedRole = new Role(this.scope, 'CognitoDefaultUnAuthenticatedRole', {
             assumedBy: new FederatedPrincipal('cognito-identity.amazonaws.com', {
@@ -88,9 +90,8 @@ export class IdentityPoolWrapper {
             )
         });
 
-        this.adminRole.addToPolicy(this.policies.uploadSpacePhotos);
-        this.adminRole.addToPolicy(this.policies.uploadProfilePhoto);
-    
+        this.adminRole.addToPolicy(this.policies.uploadDocument);
+     
     }
 
     private attachRoles(){
