@@ -1,0 +1,14 @@
+import { createBrowserHistory } from 'history';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+
+let history = createBrowserHistory();
+
+function App() {
+  return (
+    <HistoryRouter history={history}>
+      // The rest of your app
+    </HistoryRouter>
+  );
+}
+
+history.push("/foo");
