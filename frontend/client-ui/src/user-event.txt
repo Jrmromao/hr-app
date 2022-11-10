@@ -1,0 +1,85 @@
+{
+  username: "joaoromao",
+  pool: {
+    userPoolId: "us-east-1_75YwDvJbF",
+    clientId: "72avc53v43lgu9i6o1guqeefqq",
+    client: {
+      endpoint: "https://cognito-idp.us-east-1.amazonaws.com/",
+      fetchOptions: {
+      },
+    },
+    advancedSecurityDataCollectionFlag: true,
+    storage: function MemoryStorage() {
+    },
+    wrapRefreshSessionCallback: function (callback) {
+      var wrapped = function (error, data) {
+          if (data) {
+              dispatchAuthEvent('tokenRefresh', undefined, "New token retrieved");
+          }
+          else {
+              dispatchAuthEvent('tokenRefresh_failure', error, "Failed to retrieve new token");
+          }
+          return callback(error, data);
+      };
+      return wrapped;
+    },
+  },
+  Session: null,
+  client: {
+    endpoint: "https://cognito-idp.us-east-1.amazonaws.com/",
+    fetchOptions: {
+    },
+  },
+  signInUserSession: {
+    idToken: {
+      jwtToken: "eyJraWQiOiIrMkptdHN2NXpuUGxFVkltaG9DWUV2dEo2ejBuZTVzNWV0cklvOG1tXC80WT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1NDdmM2EwZC0yZDI5LTQ5YzEtOWM2Yy1lNTJmOTg3ODJkOWMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfNzVZd0R2SmJGIiwiY29nbml0bzp1c2VybmFtZSI6ImpvYW9yb21hbyIsIm9yaWdpbl9qdGkiOiIyYTNkMmU0My0yYWJjLTQzMDQtYTlkNC0wNTI0OGU3MDc4NzYiLCJhdWQiOiI3MmF2YzUzdjQzbGd1OWk2bzFndXFlZWZxcSIsImV2ZW50X2lkIjoiZmQ4YTAzNmMtOGEyMi00YmM0LThlYjEtN2YyZTg1YjNhMDUxIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjgxMTYxNzksImV4cCI6MTY2ODExOTc3OSwiaWF0IjoxNjY4MTE2MTc5LCJqdGkiOiIzMzY4OWY0Zi05NDcyLTQyNWEtYWQ0NC03NDBjNDc0MDhhZTAiLCJlbWFpbCI6ImpybXJvbWFvQG1haWwuY29tIn0.l9QRE1_kV2P6j0gbSSEo0uBFEIeBCQGv2DGLRiCSMOdy7WRGx9J8zoTZHAlMMXObN7EskALG3w8OSQa6DVWXCq99z7HxpB4RQ8W03UNGbTJnMKIny8umZiEw4sm0_FSGxR13r6XmewihhRxEgjxrpLowt9hC_OXpJgLLHIayep21v5Zj5nLhp_jxUYxmegVzLm8lAhKYx7IcQWh0Sp35bpxLxURoSHurtYaqQjYIkgxCA-jl7Y7Rxmvhb03TqjSxJK6KfdL7nUA3okVG_vGhdd46VC_nTVwePVZTCYXGxB1mOFfgSJh8p5cA1Atv_fLVNrkZdMobuSMPLElCyr4zNw",
+      payload: {
+        sub: "547f3a0d-2d29-49c1-9c6c-e52f98782d9c",
+        email_verified: true,
+        iss: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_75YwDvJbF",
+        "cognito:username": "joaoromao",
+        origin_jti: "2a3d2e43-2abc-4304-a9d4-05248e707876",
+        aud: "72avc53v43lgu9i6o1guqeefqq",
+        event_id: "fd8a036c-8a22-4bc4-8eb1-7f2e85b3a051",
+        token_use: "id",
+        auth_time: 1668116179,
+        exp: 1668119779,
+        iat: 1668116179,
+        jti: "33689f4f-9472-425a-ad44-740c47408ae0",
+        email: "jrmromao@mail.com",
+      },
+    },
+    refreshToken: {
+      token: "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.EVBogKx_G_L-mHRetI_QSwGhqjYSMCR9RYlzgHWN0TLbKlFvqY2BMrBomts2XyEGtEhGlGY-EgcccWvqQf55f0higDtQbX_gg6m1_62p54IWuV77k1egb-5SmG_gaabvbOFYppYfhrnN0joBVLiARofmVtVIj9kVVT-B40GFle3YuFNTRECh5EbBemLR-1R_woQSjjf0YRkNiYLYZeXnQ00jPnvSCvs2sVNjJaAaoqPVFUvphWW0foK8J_Awo8kNO7k8vDbbreb37Js4ujtKsxUT48-3MW0scA0AHcPX02b2TRaRuckC_Y3GYtlox_F14y6yeRTMk7oBf76zvD9-MQ.Of-vsgIYPNcB7izB.DQaWdaQzil-Pwft0AQ-hclCegWXk9Wd-IuUjv4nD5dIW_KVzkdP8rMYQOIWxVqJw53Fhk7m_AAVbtdPFGk1Ajc852TLphB_f8dzmL6fivCSqUHjTFqQyaz-a5C75Bm8cJKShfb5Xs1xS_bHfmeC63ELMYluA5DkFwsJ7YI776nxQlQdpAqk7KqI4YWCguFNR0-Nwu-p--BULx0V1R9yCVukGnJ16PjbHGbIMoATRthu9XisT94vCcLAx-GZako3UkQjamml-MYHcbcsh8p0kX15rcUbrZPQxmQwoRLUBoBWJV9R79gP1FZSkPcdqSCN_FPlfZcSYh0SpxZMzb1KE5XuOBprTiLkFeuoOWx8ngaplwuVbGFFAHkAvCXQYZd85JS9netVSlAzsbTRuCpKeib8aMxJdyIzdx_0Xbp9XZrEUm0bd-OLjyvf3zlPD9SvSBJAPAN3KIR86n-RMO9KOQ6OTM73GNDoDy7u5WCZ8k0N2DbYO-2i-EtBAeYUQSPalAOU11Umq5O2B9OTE-K3MCxurwGpW_aIuqIoaINJcVmEPZ00GMZt9ZkKOY35B4H5wxzpvau4IqWNHmWxQcg44K8ohJHEm8_SxI-NvV2491EJMdWWs2sh9G_xj02lQvzquKfkm-wFX5TVgK2No4wLMf3wgjzLKv4qy26xxs4s63H9_CwV-DyM-88bGWydhyekgDRxQACb92vMN5CnKcdN8I_eiNVIb4sEwmEZv5Ltm3PdIV0Z8e6_Ge2OfFCaUCTxPEYgP97JVom9eLZhyJ3A2FpvpzVUjhX7bMuGC3q3bsLKnobMh8UnNCXNkl1FU3Gc0UXjkYbUaOaKW_OUpV09uJRRk324_yIi5o_EVUtKL3cbkcR_x_f3Mu9YZzlMCoNLGT-aez40Pm96nknjtBwY785YGorumhe84k9A0ee5Sy9VH1G2C-k3cLUxCuX5s4bU0iA7cvtMSWeqAcKVrmGI77_Jq1crI1X9PG8JjgcyTKqoWMMK5dXwfSbkM7ca_setOO-ayRzKdbyLpfPzPp6DEJL-2S8-W9gkFWYh0tdzuRiOx0_LXaY9rXtKCFJBkDiC9JXnHYgIpWPjJu-sYyUIjCalhSPlveOayLEZjUAEve3ZChPBDtVmPAlmfHmSPYOc8Lm0ryWUpYjMqEdtr5lpThbHmL80StBbEg7R6HlYz07DyAu4ohZiTiKtJnChvAzFx0UjUKLOEbrLfJ4LkkjVmoQY5JvB9p3hN-G87Tcy61wGyUuf39CFmbEwHNnbomsYVknE7JHaQxbM.OHNNr-gjLYw76KP6CCTcRA",
+    },
+    accessToken: {
+      jwtToken: "eyJraWQiOiJtMDIrRTVIR2lFdVVLcmFpV1N3NjlpVDBPOXdqRzdDRmp4eHJ2YlpBekZVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1NDdmM2EwZC0yZDI5LTQ5YzEtOWM2Yy1lNTJmOTg3ODJkOWMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV83NVl3RHZKYkYiLCJjbGllbnRfaWQiOiI3MmF2YzUzdjQzbGd1OWk2bzFndXFlZWZxcSIsIm9yaWdpbl9qdGkiOiIyYTNkMmU0My0yYWJjLTQzMDQtYTlkNC0wNTI0OGU3MDc4NzYiLCJldmVudF9pZCI6ImZkOGEwMzZjLThhMjItNGJjNC04ZWIxLTdmMmU4NWIzYTA1MSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2NjgxMTYxNzksImV4cCI6MTY2ODExOTc3OSwiaWF0IjoxNjY4MTE2MTc5LCJqdGkiOiJmMmY2NTczYS1iNzIzLTQ5OTItOTNhZC0xMDg4NzcxMTA0N2UiLCJ1c2VybmFtZSI6ImpvYW9yb21hbyJ9.Caf4q73UTAiWErar58iOij_yhqidzR5GmKBdqrgUo-HlDET6YH499wiA7mIrre3aZMP_vyXrhzVhSglFZbb02L4wrDk6GS_RmhXm9w4kiVzgLg0-WBc-hrCnyEZJfNcVp5inpFl3LCf6-FEAEq8LxYI3qIg5ZiyHwYYwL00pu-raAPExcmVrVgSiebpD5Uo_JZzm1AButoOjYV3rC5_IdHhuAVpALSWbTxb6Ym1Ik61-fmVA0XrcASrEBFRPgSk1MzpWq2ULg2K0RfvPVeJ9cHaGvmF5Y0pmn0ToUY_SoRP9I_RrXshx9vgwbtlpILOdy692HcB903ugU3fBdlo5Hw",
+      payload: {
+        sub: "547f3a0d-2d29-49c1-9c6c-e52f98782d9c",
+        iss: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_75YwDvJbF",
+        client_id: "72avc53v43lgu9i6o1guqeefqq",
+        origin_jti: "2a3d2e43-2abc-4304-a9d4-05248e707876",
+        event_id: "fd8a036c-8a22-4bc4-8eb1-7f2e85b3a051",
+        token_use: "access",
+        scope: "aws.cognito.signin.user.admin",
+        auth_time: 1668116179,
+        exp: 1668119779,
+        iat: 1668116179,
+        jti: "f2f6573a-b723-4992-93ad-10887711047e",
+        username: "joaoromao",
+      },
+    },
+    clockDrift: 1,
+  },
+  authenticationFlowType: "USER_SRP_AUTH",
+  storage: function MemoryStorage() {
+  },
+  keyPrefix: "CognitoIdentityServiceProvider.72avc53v43lgu9i6o1guqeefqq",
+  userDataKey: "CognitoIdentityServiceProvider.72avc53v43lgu9i6o1guqeefqq.joaoromao.userData",
+  attributes: {
+    sub: "547f3a0d-2d29-49c1-9c6c-e52f98782d9c",
+    email_verified: true,
+    email: "jrmromao@mail.com",
+  },
+  preferredMFA: "NOMFA",
+}

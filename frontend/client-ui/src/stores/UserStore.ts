@@ -2,35 +2,39 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { useNavigate } from "react-router-dom";
 import agent from "../api/agent";
 import { User, UserFormValues } from "../models/user";
+import { AuthService } from "../services/AuthService";
 import { store } from "./store";
+import { History } from "history";
+
 
 export default class UserStore {
   user: User | null = null;
-  fbAccessToken: string | null = null;
-  fbLoading = false;
   refreshTokenTimeout: any;
 
   constructor() {
     makeAutoObservable(this);
+    // const navigate = useNavigate();
+    // navigate('login')
   }
 
   get isLoggedIn() {
     return !!this.user;
-
   }
 
   login = async (creds: UserFormValues) => {
-    
-    console.log(creds);
-    
+    const authService = new AuthService();
+    const user = await authService.login(creds.username, creds.password);
+
+    if (user) {
+      store.modalStore.closeModal();
  
-    const navigate = useNavigate();
-    navigate('login')
-   
+    }
   };
 
   logout = () => {
-    
+    store.commonStore.setToken(null);
+    window.localStorage.removeItem("jwt");
+    this.user = null;
   };
 
   getUser = async () => {
@@ -47,74 +51,10 @@ export default class UserStore {
   register = async (creds: UserFormValues) => {
     try {
       // await agent.Account.register(creds);
-    //   history.push(`/account/registerSuccess?email=${creds.email}`);
+      //   history.push(`/account/registerSuccess?email=${creds.email}`);
       // store.modalStore.closeModal();
     } catch (error) {
       throw error;
     }
   };
-
-  setImage = (image: string) => {
-    if (this.user) this.user.image = image;
-  };
-
-  setDisplayName = (name: string) => {
-    if (this.user) this.user.displayName = name;
-  };
-
-  // getFacebookLoginStatus = async () => {
-  //     window.FB.getLoginStatus(response => {
-  //         if (response.status === 'connected') {
-  //             this.fbAccessToken = response.authResponse.accessToken;
-  //         }
-  //     })
-  // }
-
-  // facebookLogin = () => {
-  //     this.fbLoading = true;
-  //     const apiLogin = (accessToken: string) => {
-  //         agent.Account.fbLogin(accessToken).then(user => {
-  //             store.commonStore.setToken(user.token);
-  //             this.startRefreshTokenTimer(user);
-  //             runInAction(() => {
-  //                 this.user = user;
-  //                 this.fbLoading = false;
-  //             })
-  //             history.push('/activities');
-  //         }).catch(error => {
-  //             console.log(error);
-  //             runInAction(() => this.fbLoading = false);
-  //         })
-  //     }
-  //     if (this.fbAccessToken) {
-  //         apiLogin(this.fbAccessToken);
-  //     } else {
-  //         window.FB.login(response => {
-  //             apiLogin(response.authResponse.accessToken);
-  //         }, {scope: 'public_profile,email'})
-  //     }
-  // }
-
-  // refreshToken = async () => {
-  //     this.stopRefreshTokenTimer();
-  //     try {
-  //         const user = await agent.Account.refreshToken();
-  //         runInAction(() => this.user = user);
-  //         store.commonStore.setToken(user.token);
-  //         this.startRefreshTokenTimer(user);
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-  // }
-
-  // private startRefreshTokenTimer(user: User) {
-  //     const jwtToken = JSON.parse(atob(user.token.split('.')[1]));
-  //     const expires = new Date(jwtToken.exp * 1000);
-  //     const timeout = expires.getTime() - Date.now() - (60 * 1000);
-  //     this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
-  // }
-
-  // private stopRefreshTokenTimer() {
-  //     clearTimeout(this.refreshTokenTimeout);
-  // }
 }
