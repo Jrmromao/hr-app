@@ -1,7 +1,8 @@
 import React from 'react'
+import LoginForm from '../common/forms/LoginForm'
 const Login: React.FC = () => {
   return (
-    <div>login view</div>
+    <LoginForm/>
   )
 }
 

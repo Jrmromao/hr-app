@@ -2,8 +2,9 @@ import { Auth } from "aws-amplify";
 import { Amplify } from "aws-amplify";
 import { config } from "./config";
 import { CognitoUser } from "@aws-amplify/auth";
-import AWS = require("aws-sdk");
 import { Credentials } from "aws-sdk";
+import * as AWS from "aws-sdk";
+import { User, UserAttributes } from "../models/user";
 
 Amplify.configure({
   Auth: {
@@ -17,13 +18,34 @@ Amplify.configure({
 });
 
 export class AuthService {
-  public async login(userName: string, password: string) {
+
+
+  public async login(
+    userName: string,
+    password: string
+  ): Promise<User> {
+
+    console.log('AuthService::login');
+    
     try {
-      const user = (await Auth.signIn(userName, password)) as CognitoUser;
-      return user;
+      const user = (await Auth.signIn(userName, password)) as CognitoUser;      
+      console.log(user);
+      
+      return {
+        cognitoUser: user,
+        userName: user.getUsername(),
+        token: user.getSignInUserSession()!.getIdToken().getJwtToken(),
+      };
     } catch (error) {
       throw error;
     }
+  }
+
+  public async getUserAttributes(user: CognitoUser): Promise<UserAttributes[]> {
+    const result: UserAttributes[] = [];
+    const attributes = await Auth.userAttributes(user);
+    result.push(...attributes);
+    return result;
   }
 
   public async getAWSTemporaryCreds(user: CognitoUser) {
