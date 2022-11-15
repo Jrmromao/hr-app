@@ -1,43 +1,17 @@
-
-
-// import React, { useEffect } from 'react'
-// import { redirect } from 'react-router-dom';
-// import LoginForm from '../forms/LoginForm';
-// import { useStore } from '../stores/store';
-
-
-
-// const HomePage: React.FC<IProps> = ({ }) => {
-//     const {userStore} = useStore();
-//     useEffect(()=>{
-//     console.log('HomePage...');
-
-//     },[])
-
-
-//     return (
-
-//         <h1>Welcome</h1>
-
-//      )
-// }
-
-// export default HomePage
-
+import { createBrowserHistory } from "history";
 import { observer } from "mobx-react-lite";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
     Container,
     Header,
     Segment,
     Image,
     Button,
-    Divider,
 } from "semantic-ui-react";
 import LoginForm from "../common/forms/LoginForm";
 import { useStore } from "../stores/store";
-// import RegisterForm from '../users/RegisterForm';
 
 
 interface IProps {
@@ -45,8 +19,19 @@ interface IProps {
 }
 
 const HomePage: React.FC<IProps> = () => {
+    const { modalStore, userStore } = useStore();
+    const history = useNavigate();
 
-    const { userStore, modalStore } = useStore();
+
+    useEffect(() => {
+        if (userStore.isLoggedIn)
+            history('dashboard')
+
+    }, [userStore.isLoggedIn])
+
+
+
+
     return (
         <Segment inverted textAlign="center" vertical className="masthead">
             <Container text>
@@ -59,14 +44,22 @@ const HomePage: React.FC<IProps> = () => {
                     />
                     HR App
                 </Header>
-                <Button
-                    name='loginBtn'
-                    onClick={() => modalStore.openModal(<LoginForm />)}
+
+                {userStore.isLoggedIn ? <Button
+                    name='logoutBtn'
+                    onClick={() => userStore.logout()}
                     size="huge"
                     inverted
-                >
-                    Login
-                </Button>
+                    content={`Logout, ${userStore.user?.userName}`}
+                /> :
+                    <Button
+                        name='loginBtn'
+                        onClick={() => modalStore.openModal(<LoginForm />)}
+                        size="huge"
+                        inverted
+                        content='Login'
+                    />
+                }
             </Container>
         </Segment>
     );

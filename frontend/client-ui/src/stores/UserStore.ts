@@ -6,7 +6,6 @@ import { AuthService } from "../services/AuthService";
 import { store } from "./store";
 import { History } from "history";
 
-
 export default class UserStore {
   user: User | null = null;
   refreshTokenTimeout: any;
@@ -23,12 +22,15 @@ export default class UserStore {
 
   login = async (creds: UserFormValues) => {
     const authService = new AuthService();
-    const user = await authService.login(creds.username, creds.password);
-
-    if (user) {
-      store.modalStore.closeModal();
- 
-    }
+    await authService.login(creds.username, creds.password)
+    .then((user) => {
+      console.log(user.token);
+      
+      store.commonStore.setToken(user.token);
+      this.user = user;
+      authService.getAWSTemporaryCreds(user.cognitoUser)
+      store.modalStore.closeModal()  
+    });
   };
 
   logout = () => {
