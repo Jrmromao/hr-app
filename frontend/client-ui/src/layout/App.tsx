@@ -2,9 +2,10 @@ import { CognitoUser } from '@aws-amplify/auth';
 import { Auth } from 'aws-amplify';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import ModalContainer from '../common/modals/ModalContainer';
 import { User } from '../models/user';
+import PrivateRoutes from '../routes/PrivateRoutes';
 import { useStore } from '../stores/store';
 import Dashboard from '../views/Dashboard';
 import Employee from '../views/Employee';
@@ -35,13 +36,17 @@ function App() {
   return (
     <>
       <ModalContainer />
-      <BrowserRouter>
+     <BrowserRouter>
+
+  
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/list-employee' element={<Dashboard />} />
+          <Route element={<PrivateRoutes/>}>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/list-employee' element={<Dashboard />} />
+          </Route>
+          <Route path='/' index element={<HomePage/>}/>
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
 
     </>
   );
