@@ -1,41 +1,37 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import BasicLayout from "../layout/BasicLayout";
+import MainLayout from "../layout/MainLayout";
 // import AboutYou from "../components/AboutYou";
 // import DashboardStatus from "../components/DashboardStatus";
 // import ManageMenu from "../components/ManageMenu";
-// import BasicLayout from "../layouts/BasicLayout";
 import { useStore } from "../stores/store";
 
 export default observer(function Dashboard() {
-    const { userStore } = useStore();
+    const { userStore, employeeStore } = useStore();
     const history = useNavigate();
+    const [list, setList] = useState('')
+    const [create, setCreate] = useState('')
+    const [update, setUpdate] = useState('')
+    const [del, setDel] = useState('')
 
     useEffect(() => {
-        if (!userStore.isLoggedIn)
-            history('/')
 
-    }, [userStore.isLoggedIn, history])
+       employeeStore.list().then(res => setList(res))
+       employeeStore.create().then(res => setCreate(res))
+       employeeStore.update().then(res => setUpdate(res))
+       employeeStore.delete().then(res => setDel(res))
+
+    }, [employeeStore, setList, setUpdate, setCreate, setDel])
 
     return (
-        <>
-            <BasicLayout>
-                <Grid>
-                    <Grid.Row columns="2">
-                        <Grid.Column width="7">
-                            {/* <AboutYou user={userStore.user!} /> */}
-                        </Grid.Column>
-                        <Grid.Row centered></Grid.Row>
-                        <Grid.Column width="9">
-                            {/* <DashboardStatus /> */}
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-                <hr />
-                {/* <ManageMenu /> */}
-            </BasicLayout>
-        </>
-    );
+        <MainLayout>
+        {list} <br/>
+        {create}<br/>
+        {update}<br/>
+        {del}<br/>
+        </MainLayout>
+    )
 });

@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import BasicLayout from '../layout/BasicLayout'
-import ManageEmployeeLayout from '../layout/ManageEmployeeLayout'
+import MainLayout from '../layout/MainLayout'
 
 const Employee: React.FC = () => {
     return (
-        <ManageEmployeeLayout>register-employee</ManageEmployeeLayout>
+        <MainLayout>register-employee</MainLayout>
     )
 }
 

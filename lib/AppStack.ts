@@ -77,14 +77,13 @@ export class AppStack extends cdk.Stack {
         this.policies);
  
 
-    const optionsWithAuthorizer: MethodOptions = {
-      authorizationType: AuthorizationType.COGNITO,
-      authorizer: {
-          authorizerId: this.authorizer.authorizer.authorizerId,
-          authorizationType: 
-
+        const optionsWithAuthorizer: MethodOptions = {
+          authorizationType: AuthorizationType.COGNITO,
+          authorizer: {
+              authorizerId: this.authorizer.authorizer.authorizerId
+          }
       }
-  }
+      
   const optionsWithCors:ResourceOptions = {
       defaultCorsPreflightOptions : {
           allowOrigins: Cors.ALL_ORIGINS,
