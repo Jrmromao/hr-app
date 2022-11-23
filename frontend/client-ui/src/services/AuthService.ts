@@ -18,19 +18,10 @@ Amplify.configure({
 });
 
 export class AuthService {
-
-
-  public async login(
-    userName: string,
-    password: string
-  ): Promise<User> {
-
-    console.log('AuthService::login');
-    
+  public async login(userName: string, password: string): Promise<User> {
     try {
-      const user = (await Auth.signIn(userName, password)) as CognitoUser;      
-      console.log(user);
-      
+      const user = (await Auth.signIn(userName, password)) as CognitoUser;
+
       return {
         cognitoUser: user,
         userName: user.getUsername(),
@@ -41,6 +32,7 @@ export class AuthService {
     }
   }
 
+ 
   public async getUserAttributes(user: CognitoUser): Promise<UserAttributes[]> {
     const result: UserAttributes[] = [];
     const attributes = await Auth.userAttributes(user);
@@ -50,6 +42,7 @@ export class AuthService {
 
   public async getAWSTemporaryCreds(user: CognitoUser) {
     const cognitoIdentityPool = `cognito-idp.${config.REGION}.amazonaws.com/${config.USER_POOL_ID}`;
+
     AWS.config.credentials = new AWS.CognitoIdentityCredentials(
       {
         IdentityPoolId: config.IDENTITY_POOL_ID,

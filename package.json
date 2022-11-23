@@ -13,6 +13,7 @@
     "cdk": "cdk"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.108",
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
     "@types/prettier": "2.6.0",
@@ -26,6 +27,7 @@
     "@aws-amplify/auth": "^3.4.32",
     "aws-amplify": "^4.0.0",
     "aws-cdk-lib": "2.40.0",
+    "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1248.0",
     "constructs": "^10.0.0",
     "mobx-react": "^7.5.3"

@@ -6,7 +6,9 @@ def main(event, _):
   return {
       "statusCode": 200,
       "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*'
       },
       "body": 'Hello from Update lambda!'
   }

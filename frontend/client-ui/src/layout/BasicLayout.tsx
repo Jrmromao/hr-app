@@ -10,10 +10,8 @@ interface IProps {
 const BasicLayout: React.FC<IProps> = ({ children }) => {
   return (
     <Fragment>
-      <NavBar />
-      <div>
+      {/* <NavBar /> */}
         <Container className="main-content-container">{children}</Container>
-      </div>
     </Fragment>
   );
 };

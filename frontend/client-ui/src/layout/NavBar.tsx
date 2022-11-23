@@ -25,12 +25,12 @@ export default observer(function NavBar() {
       <div className="nav-logo ui.container">LOGO</div>
       <Menu>
         <Container>
-          <Menu.Item name="dashboard">
+          {/* <Menu.Item name="dashboard">
             <Button as={NavLink} icon="home" size='massive' style={{backgroundColor: '#fff', textDecoration: 'none'}}  to="/dashboard" />
           </Menu.Item>
           <Menu.Item name="employees">
             <Button as={NavLink}  icon={'user circle outline'} style={{backgroundColor: '#fff', textDecoration: 'none'}} content='Employee' to="/employees" />
-          </Menu.Item>
+          </Menu.Item> */}
  
           {isLoggedIn && (
             <>

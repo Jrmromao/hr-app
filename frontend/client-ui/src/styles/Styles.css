@@ -1,5 +1,5 @@
 body {
-  background-color: #EAEAEA !important;
+  background-color: #F4F4F5 !important;
 }
 
  
@@ -20,9 +20,9 @@ body {
   align-items: center;
   background-image: linear-gradient(
           135deg,
-          rgb(24, 42, 115) 0%,
-          rgb(33, 138, 174) 69%,
-          rgb(32, 167, 172) 89%
+          rgb(139, 88, 23) 0%,
+          rgb(192, 118, 39) 69%,
+          rgb(224, 145, 80) 89%
   ) !important;
   height: 100vh;
 }

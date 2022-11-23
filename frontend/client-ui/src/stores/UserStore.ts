@@ -1,11 +1,14 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, action } from "mobx";
 import { useNavigate } from "react-router-dom";
 import agent from "../api/agent";
 import { User, UserFormValues } from "../models/user";
 import { AuthService } from "../services/AuthService";
 import { store } from "./store";
 import { History } from "history";
-
+import { Auth } from "aws-amplify";
+import AWS from "aws-sdk";
+import { CognitoUserPool } from "amazon-cognito-identity-js";
+import { CognitoUser } from "@aws-amplify/auth";
 export default class UserStore {
   user: User | null = null;
   refreshTokenTimeout: any;
@@ -20,34 +23,36 @@ export default class UserStore {
     return !!this.user;
   }
 
-  login = async (creds: UserFormValues) => {
+  @action login = async (creds: UserFormValues) => {
     const authService = new AuthService();
-    await authService.login(creds.username, creds.password)
-    .then((user) => {
-      console.log(user.token);
-      
-      store.commonStore.setToken(user.token);
+    await authService.login(creds.username, creds.password).then((user) => {
+      // store.commonStore.setToken(user.token);
       this.user = user;
-      authService.getAWSTemporaryCreds(user.cognitoUser)
-      store.modalStore.closeModal()  
+      store.modalStore.closeModal();
     });
+
+    if (this.user)
+      await authService.getAWSTemporaryCreds(this.user.cognitoUser);
   };
 
-  logout = () => {
-    store.commonStore.setToken(null);
-    window.localStorage.removeItem("jwt");
-    this.user = null;
+  logout = async () => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      throw error;
+    }
   };
 
   getUser = async () => {
-    try {
-      // const user = await agent.Account.current();
-      // store.commonStore.setToken(user.token);
-      // runInAction(() => this.user = user);
-      // this.startRefreshTokenTimer(user);
-    } catch (error) {
-      console.log(error);
-    }
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        this.user = {
+          cognitoUser: user as CognitoUser,
+          userName: user.getUsername(),
+          token: user.getSignInUserSession()!.getIdToken().getJwtToken(),
+        };
+      })
+      .catch((error) => console.log(error));
   };
 
   register = async (creds: UserFormValues) => {
