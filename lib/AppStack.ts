@@ -51,7 +51,7 @@ export class AppStack extends cdk.Stack {
 
     const hrAppCloudFront = new CloudFrontWebDistribution(
       this,
-      "hr-app-client-ui-distribution",
+      "hr-app-distribution",
       {
         originConfigs: [
           {

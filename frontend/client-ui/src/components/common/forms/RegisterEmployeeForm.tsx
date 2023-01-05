@@ -5,13 +5,15 @@ import { Button, Header, Label } from "semantic-ui-react";
 
 import * as Yup from "yup";
 import MyTextInput from "./MyTextInput";
-import { useStore } from "../../stores/store";
+import { useStore } from "../../../stores/store";
 
 import MyDateInput from "./MyDateInput";
+import MainLayout from "../../../layout/MainLayout";
 export default observer(function RegisterEmployeeForm() {
   const { userStore } = useStore();
 
   return (
+    <MainLayout>
     <Formik
       initialValues={{ username: "", password: "", error: null }}
       onSubmit={(values, { setErrors }) =>
@@ -63,5 +65,6 @@ export default observer(function RegisterEmployeeForm() {
         </Form>
       )}
     </Formik>
+    </MainLayout>
   );
 });

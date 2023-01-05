@@ -10,7 +10,7 @@ import {
     Image,
     Button,
 } from "semantic-ui-react";
-import LoginForm from "../common/forms/LoginForm";
+import LoginForm from "../components/common/forms/LoginForm";
 import { useStore } from "../stores/store";
 
 

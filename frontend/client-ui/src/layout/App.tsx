@@ -3,7 +3,8 @@ import { Auth } from 'aws-amplify';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
-import ModalContainer from '../common/modals/ModalContainer';
+import RegisterEmployeeForm from '../components/common/forms/RegisterEmployeeForm';
+import ModalContainer from '../components/common/modals/ModalContainer';
 import { User } from '../models/user';
 import PrivateRoutes from '../routes/PrivateRoutes';
 import { useStore } from '../stores/store';
@@ -37,12 +38,12 @@ function App() {
     <>
       <ModalContainer />
      <BrowserRouter>
-
-  
         <Routes>
           <Route element={<PrivateRoutes/>}>
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/list-employee' element={<Dashboard />} />
+            <Route path='/list' element={<Dashboard />} />
+            <Route path='/register' element={<RegisterEmployeeForm />} />
+            <Route path='/settings' element={<Dashboard />} />
           </Route>
           <Route path='/' index element={<HomePage/>}/>
         </Routes>

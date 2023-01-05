@@ -4,7 +4,7 @@
 }
 
 .header-nav {
-  padding-top: 10px;
+  /* padding-top: 10px; */
   height: 120px;
   background-color: #fff ;
   /* border-bottom-style: solid !important;
@@ -69,9 +69,9 @@ align-items: stretch;
   margin: 20px;
   padding: 5px;
 }
-.ui.segment:first-child {
+/* .ui.segment:first-child {
   margin-top: 20px !important	;
-}
+} */
 
 /* 
 

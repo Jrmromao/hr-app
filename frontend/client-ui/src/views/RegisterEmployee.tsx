@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import RegisterEmployeeForm from '../common/forms/RegisterEmployeeForm'
+import RegisterEmployeeForm from '../components/common/forms/RegisterEmployeeForm'
 import ManageEmployeeLayout from '../layout/MainLayout'
 
 const RegisterEmployee: React.FC = () => {

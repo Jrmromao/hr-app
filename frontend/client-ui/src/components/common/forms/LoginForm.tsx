@@ -5,7 +5,7 @@ import { Button, Header, Label } from "semantic-ui-react";
 
 import * as Yup from "yup";
 import MyTextInput from "./MyTextInput";
-import { useStore } from "../../stores/store";
+import { useStore } from "../../../stores/store";
 import { useNavigate } from "react-router-dom";
 export default observer(function LoginForm() {
   const { userStore } = useStore();

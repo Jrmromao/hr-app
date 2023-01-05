@@ -2,11 +2,11 @@ body {
   background-color: #F4F4F5 !important;
 }
 
- 
+
 .react-calendar {
   width: 100%;
   border: none;
-  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
 }
 
 .react-datepicker-wrapper {
@@ -18,12 +18,10 @@ body {
 .masthead {
   display: flex;
   align-items: center;
-  background-image: linear-gradient(
-          135deg,
-          rgb(139, 88, 23) 0%,
-          rgb(192, 118, 39) 69%,
-          rgb(224, 145, 80) 89%
-  ) !important;
+  background-image: linear-gradient(135deg,
+      rgb(139, 88, 23) 0%,
+      rgb(192, 118, 39) 69%,
+      rgb(224, 145, 80) 89%) !important;
   height: 100vh;
 }
 
@@ -41,12 +39,13 @@ body {
   font-size: 1.7em;
   font-weight: normal;
 }
-.about-you-header-h1{
-  padding-top: 40px; 
-  padding-left:20px; 
+
+.about-you-header-h1 {
+  padding-top: 40px;
+  padding-left: 20px;
 }
 
-.about-you-header{
+.about-you-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,19 +53,20 @@ body {
 
 }
 
-.about-you-header p{
- font-size: large;
- font-weight: bold;
+.about-you-header p {
+  font-size: large;
+  font-weight: bold;
 
 }
 
-.about-you-header-button-email{
+.about-you-header-button-email {
   display: flex;
- margin-left: 25px;
-margin-bottom: 30px;
- flex-direction: column;
-align-items: flex-start;
+  margin-left: 25px;
+  margin-bottom: 30px;
+  flex-direction: column;
+  align-items: flex-start;
 
 
 }
+
 /*end home page styles*/
