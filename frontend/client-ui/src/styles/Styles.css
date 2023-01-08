@@ -1,8 +1,19 @@
 body {
   background-color: #F4F4F5 !important;
+  font-family: "Inter";
 }
 
 
+
+ 
+.right-column{
+  width: 990px !important;
+background-color: rgb(49, 163, 39);
+}
+.left-column{
+  width: 220px !important;
+ 
+}
 .react-calendar {
   width: 100%;
   border: none;

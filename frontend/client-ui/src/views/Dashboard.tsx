@@ -11,6 +11,7 @@ import { useStore } from "../stores/store";
 
 export default observer(function Dashboard() {
     const { userStore, employeeStore } = useStore();
+
     const history = useNavigate();
     const [list, setList] = useState('')
     const [create, setCreate] = useState('')
@@ -35,7 +36,7 @@ export default observer(function Dashboard() {
                         <Segment> {list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {create}</Segment>
+                        <Segment> {JSON.stringify(userStore.user, null, 2)}</Segment>
                     </Grid.Column>
                     <Grid.Column>
                         <Segment> {create}</Segment>

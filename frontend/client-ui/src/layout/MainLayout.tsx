@@ -16,30 +16,30 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
 
 
   const location = useLocation();
+
+
   useEffect(() => {
-    setActive("");
-    return () => {
-      setActive("");
-    };
-  }, [setActive, location]);
+
+    
+
+  }, []);
 
   return (
     <ManageLayout>
-
-      <Grid style={{ backgroundColor: '#F4F4F5', height: 2000 }} className='item-active'>
-        <Grid.Column width="3" >
+      <Grid style={{ backgroundColor: '#F4F4F5', height: 1000 }} className='item-active'>
+        <Grid.Column width={3} >
           <div className="nav-logo">LOGO</div>
           <p><strong>You</strong></p>
           <Menu secondary vertical fluid>
-            <Menu.Item active={active == '/dashboard'} content="Dashboard" as={NavLink} to="/dashboard" />
-            <Menu.Item active={active == '/list'} content="Me" as={NavLink} to="/list" />
+            <Menu.Item active={active == '/dashboard'} content="Dashboard" as={NavLink} to="/dashboard"  />
+            {/* <Menu.Item active={active == '/list'} content="Me" as={NavLink} to="/list" />
             <Menu.Item active={active == '/list'} content="Time off" as={NavLink} to="/list" />
-            <Menu.Item active={active == '/list'} content="My documents" as={NavLink} to="/list" />
+            <Menu.Item active={active == '/list'} content="My documents" as={NavLink} to="/list" /> */}
           </Menu>
           <br />
           <p><strong>Your Company</strong></p>
           <Menu secondary vertical fluid>
-            <Menu.Item icon='users' active={active == '/register'} content="Employees" as={NavLink} to="/register" />
+            <Menu.Item icon='users' active={active == '/manage-employees' || active == '/manage-jobs'} content="Employees" as={NavLink} to="/manage-employees" />
 
             <Menu.Item active={active == '/list'} content="Reports" as={NavLink} to="/list" />
             <Menu.Item active={active == '/list'} content="Files" as={NavLink} to="/list" />

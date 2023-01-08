@@ -39,12 +39,13 @@ export class AppStack extends cdk.Stack {
     this.initializeDocumentBucket();
 
 
-    const bucketName = "hr-app-client-ui" + this.suffix;
+    const bucketName = "app.jrmromao.com";
 
     this.deploymentBucket = new Bucket(this, "hr-app-client-ui", {
       bucketName: bucketName,
       publicReadAccess: true,
       websiteIndexDocument: "index.html",
+      websiteErrorDocument: 'index.html',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });

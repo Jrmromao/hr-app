@@ -1,19 +1,19 @@
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { } from "react";
-import { Button, Header, Label } from "semantic-ui-react";
+import { Button, Grid, Header, Label, Menu } from "semantic-ui-react";
 
 import * as Yup from "yup";
 import MyTextInput from "./MyTextInput";
 import { useStore } from "../../../stores/store";
 
 import MyDateInput from "./MyDateInput";
-import MainLayout from "../../../layout/MainLayout";
-export default observer(function RegisterEmployeeForm() {
+ 
+
+export default observer(function Employees() {
   const { userStore } = useStore();
 
   return (
-    <MainLayout>
     <Formik
       initialValues={{ username: "", password: "", error: null }}
       onSubmit={(values, { setErrors }) =>
@@ -24,23 +24,20 @@ export default observer(function RegisterEmployeeForm() {
       validationSchema={Yup.object({
         email: Yup.string().required(),
         name: Yup.string().required(),
-        dob:  Yup.string().required(),
+        dob: Yup.string().required(),
         department: Yup.string().required(),
       })}
     >
       {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
         <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-          <Header
-            as="h2"
-            content="Register Employee"
-            color="orange"
-            textAlign="left"
-          />
-          <MyTextInput name="name" placeholder="Name" />
-          <MyTextInput name="email" placeholder="Email" type='email' />
-          <MyDateInput name="dob" placeholderText="Date of Bith" timeCaption="time" dateFormat={'MMM d, yyyy'} />
-          <MyTextInput name="department" placeholder="Department" />
 
+          <MyTextInput name="name" placeholder="Name" label='First Name' />
+          <MyTextInput name="name" placeholder="Name" label='Last Name' />
+
+          <MyDateInput name="dob" placeholderText="Date of Bith" timeCaption="time" dateFormat={'MMM d, yyyy'} label='Date of birth' />
+          <MyTextInput name="gender" placeholder="Gender" label='Gender' />
+          <MyTextInput name="nationality" placeholder="Nationality" label='Nationality' />
+          <MyTextInput name="phoneNum" placeholder="Phone number" label='Phone number' />
 
           <ErrorMessage
             name="error"
@@ -65,6 +62,5 @@ export default observer(function RegisterEmployeeForm() {
         </Form>
       )}
     </Formik>
-    </MainLayout>
   );
 });
