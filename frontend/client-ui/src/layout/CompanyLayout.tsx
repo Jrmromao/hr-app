@@ -17,29 +17,29 @@ interface IProps {
 }
 
 
-const EmployeeLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
+const CompanyLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
 
     const { modalStore, layoutStore } = useStore();
     const [menuItemLabel, setMenuItemLabel] = useState('')
-    const [formModal, setFormModal] = useState<JSX.Element>(<NewEmployeeForm/>)
+    const [formModal, setFormModal] = useState<JSX.Element>(<NewEmployeeForm />)
     const location = useLocation();
 
     const { pathname } = location;
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (pathname.includes('employee'))
-            layoutStore.onMenuItemChange('employee', <NewEmployeeForm />)
-        else
-            layoutStore.onMenuItemChange('jobs', <NewJobForm />)
-    }, [layoutStore, pathname, NewEmployeeForm, NewJobForm])
+    //     if (pathname.includes('employee'))
+    //         layoutStore.onMenuItemChange('employee', <NewEmployeeForm />)
+    //     else
+    //         layoutStore.onMenuItemChange('jobs', <NewJobForm />)
+    // }, [layoutStore, pathname, NewEmployeeForm, NewJobForm])
 
     return (
         <MainLayout>
             <Menu pointing secondary>
-                <Menu.Item name='Emplyees' active={active === 'employee'} as={NavLink} to="/manage-employees" />
-                <Menu.Item name='Jobs' active={active === 'jobs'} as={NavLink} to="/manage-jobs" />
+                <Menu.Item name='Details' as={NavLink} to="#" />
+                <Menu.Item name='Jobs' as={NavLink} to="#" />
                 <Menu.Menu position='right'>
-                    <Menu.Item name={layoutStore.employeeMenuItem?.label} onClick={(env) => modalStore.openModal(layoutStore.employeeMenuItem?.formModal || <NewEmployeeForm />)
+                    <Menu.Item name={'New Location'} onClick={(env) => modalStore.openModal(<NewEmployeeForm />)
                     } />
                 </Menu.Menu>
             </Menu>
@@ -55,4 +55,4 @@ const EmployeeLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
     );
 };
 
-export default observer(EmployeeLayout);
+export default observer(CompanyLayout);

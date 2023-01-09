@@ -12,7 +12,7 @@ const Jobs: React.FC = () => {
                 <Grid.Row columns='2'>
                     <Grid.Column width={6}>The jobs are specific activities that contribute to the company’s goals, like a software engineer or a sales executive.</Grid.Column>
                     <Grid.Column width={10}>
-                        <Segment color='red' />
+                        <Segment color='red'>this will show if: employees without a role or a level</Segment>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns='1'>

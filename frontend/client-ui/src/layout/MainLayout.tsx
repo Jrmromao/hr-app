@@ -11,7 +11,7 @@ interface IProps {
 }
 const MainLayout: React.FC<IProps> = ({ children }) => {
   const [active, setActive] = useState("");
- 
+
   const { layoutStore } = useStore();
 
 
@@ -20,18 +20,18 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
 
-    
+
 
   }, []);
 
   return (
     <ManageLayout>
-      <Grid style={{ backgroundColor: '#F4F4F5', height: 1000 }} className='item-active'>
+      <Grid className={'main-menu-sidebar'}>
         <Grid.Column width={3} >
           <div className="nav-logo">LOGO</div>
           <p><strong>You</strong></p>
           <Menu secondary vertical fluid>
-            <Menu.Item active={active == '/dashboard'} content="Dashboard" as={NavLink} to="/dashboard"  />
+            <Menu.Item active={active == '/dashboard'} content="Dashboard" as={NavLink} to="/dashboard" />
             {/* <Menu.Item active={active == '/list'} content="Me" as={NavLink} to="/list" />
             <Menu.Item active={active == '/list'} content="Time off" as={NavLink} to="/list" />
             <Menu.Item active={active == '/list'} content="My documents" as={NavLink} to="/list" /> */}
@@ -39,17 +39,32 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
           <br />
           <p><strong>Your Company</strong></p>
           <Menu secondary vertical fluid>
-            <Menu.Item icon='users' active={active == '/manage-employees' || active == '/manage-jobs'} content="Employees" as={NavLink} to="/manage-employees" />
-
-            <Menu.Item active={active == '/list'} content="Reports" as={NavLink} to="/list" />
-            <Menu.Item active={active == '/list'} content="Files" as={NavLink} to="/list" />
-
-            <Menu.Item active={active == '/settings'} content="Company" as={NavLink} to="/settings" onClick={() => layoutStore.onCompanyDropdownClick()} />
-            {layoutStore.dropdownOpened &&
-                <Menu.Item >
-                  <Menu.Item content="Reports" as={NavLink} to="/settings/reports" />
-                  <Menu.Item content="Files" as={NavLink} to="/settings/files" />
-                </Menu.Item>
+            <Menu.Item active={active == '/manage-employees' || active == '/manage-jobs'} content="Employees" as={NavLink} to="/manage-employees"  onClick={() => layoutStore.onEmployeeDropdownClick()} />
+            {layoutStore.empDropdownOpened &&
+              <Menu.Item >
+                
+                <Menu.Item content="Files" as={NavLink} to="/files" />
+              </Menu.Item>
+            }
+            <Menu.Item active={active == '/reports'} content="Reports" as={NavLink} to="/" />
+            <Menu.Item active={active == '/files'} content="Files" as={NavLink} to="/settings" onClick={() => layoutStore.onFilesDropdownClick()} /> {/* will set path to settings just as a placeholder */}
+            {layoutStore.fileDropdownOpened &&
+              <Menu.Item >
+                <Menu.Item content="Company"  /> {/* */}
+                <Menu.Item content="Employee"  />
+              </Menu.Item>
+            }
+            <Menu.Item active={active == '/manage-company'} content="Company" as={NavLink} to="/manage-company" onClick={() => layoutStore.onCompanyDropdownClick()} />
+            {layoutStore.compDropdownOpened &&
+              <Menu.Item >
+                <Menu.Item content="Details" as={NavLink} to="/" />
+                <Menu.Item content="Time off" as={NavLink} to="/" />
+                <Menu.Item content="Work schedule" as={NavLink} to="/" />
+                <Menu.Item content="Workplaces" as={NavLink} to="/" />
+                <Menu.Item content="Documents" as={NavLink} to="/" />
+                <Menu.Item content="Active log" as={NavLink} to="/" />
+                <Menu.Item content="Workflows" as={NavLink} to="/" />
+              </Menu.Item>
             }
           </Menu>
         </Grid.Column>

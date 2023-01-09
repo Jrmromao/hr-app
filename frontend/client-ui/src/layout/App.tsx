@@ -10,8 +10,9 @@ import Dashboard from '../views/Dashboard';
 import ManageEmployeeView from '../views/ManageEmployeeView';
 import HomePage from '../views/HomePage';
 import ManageJobsView from '../views/ManageJobsView';
- 
- 
+import ManageCompanyView from '../views/ManageCompanyView';
+
+
 
 function App() {
   const { userStore } = useStore();
@@ -40,6 +41,8 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/list' element={<Dashboard />} />
             <Route path='/manage-employees' element={<ManageEmployeeView />} />
+            <Route path='/manage-company' element={<ManageCompanyView />} />
+            <Route path='/files' element={<ManageEmployeeView />} />
             <Route path='/manage-jobs' element={<ManageJobsView />} />
             <Route path='/settings' element={<Dashboard />} />
           </Route>

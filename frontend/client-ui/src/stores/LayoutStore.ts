@@ -12,7 +12,9 @@ import { CognitoUser } from "@aws-amplify/auth";
 import { EmployeeMenuItem } from "../models/employee";
 
 export default class LayoutStore {
-  dropdownOpened: boolean = false;
+  empDropdownOpened: boolean = false;
+  fileDropdownOpened: boolean = false;
+  compDropdownOpened: boolean = false;
   employeeMenuItem: EmployeeMenuItem | null = null;
   hasTableFlag: boolean = false;
 
@@ -49,14 +51,29 @@ export default class LayoutStore {
         break;
     }
   };
-
-  onCompanyDropdownClick = async () => {
+  onFilesDropdownClick = async () => {
     try {
-      this.dropdownOpened = !this.dropdownOpened;
+      this.fileDropdownOpened = !this.fileDropdownOpened;
     } catch (error) {
       console.log(error);
     }
+    return;
+  };
+  onEmployeeDropdownClick = async () => {
+    try {
+      this.empDropdownOpened = !this.empDropdownOpened;
+    } catch (error) {
+      console.log(error);
+    }
+    return;
+  };
 
+  onCompanyDropdownClick = async () => {
+    try {
+      this.compDropdownOpened = !this.compDropdownOpened;
+    } catch (error) {
+      console.log(error);
+    }
     return;
   };
 }

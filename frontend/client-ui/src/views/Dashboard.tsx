@@ -36,7 +36,11 @@ export default observer(function Dashboard() {
                         <Segment> {list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {JSON.stringify(userStore.user, null, 2)}</Segment>
+                        {/* <Segment> 
+                            {JSON.stringify(userStore.user, null, 2)}
+                        
+                        </Segment> */}
+                        <Segment> {create}</Segment>
                     </Grid.Column>
                     <Grid.Column>
                         <Segment> {create}</Segment>
@@ -45,14 +49,16 @@ export default observer(function Dashboard() {
                 </Grid.Row>
 
                 <Grid.Row>
-                <Grid.Column>
+                    <Grid.Column>
                         <Segment> {create}</Segment>
                     </Grid.Column>
                     <Grid.Column>
                         <Segment> {del}</Segment>
                     </Grid.Column>
-               
 
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
                 </Grid.Row>
             </Grid>
 
