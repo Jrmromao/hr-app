@@ -24,24 +24,24 @@ const EmployeeLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
     const [formModal, setFormModal] = useState<JSX.Element>(<NewEmployeeForm/>)
     const location = useLocation();
 
-    const { pathname } = location;
-    useEffect(() => {
+    // const { pathname } = location;
+    // useEffect(() => {
 
-        if (pathname.includes('employee'))
-            layoutStore.onMenuItemChange('employee', <NewEmployeeForm />)
-        else
-            layoutStore.onMenuItemChange('jobs', <NewJobForm />)
-    }, [layoutStore, pathname, NewEmployeeForm, NewJobForm])
+    //     if (pathname.includes('employee'))
+    //         layoutStore.onMenuItemChange('employee', <NewEmployeeForm />)
+    //     else
+    //         layoutStore.onMenuItemChange('jobs', <NewJobForm />)
+    // }, [layoutStore, pathname, NewEmployeeForm, NewJobForm])
 
     return (
         <MainLayout>
             <Menu pointing secondary>
                 <Menu.Item name='Emplyees' active={active === 'employee'} as={NavLink} to="/manage-employees" />
                 <Menu.Item name='Jobs' active={active === 'jobs'} as={NavLink} to="/manage-jobs" />
-                <Menu.Menu position='right'>
+                {/* <Menu.Menu position='right'>
                     <Menu.Item name={layoutStore.employeeMenuItem?.label} onClick={(env) => modalStore.openModal(layoutStore.employeeMenuItem?.formModal || <NewEmployeeForm />)
                     } />
-                </Menu.Menu>
+                </Menu.Menu> */}
             </Menu>
             <br />
             <Grid divided>

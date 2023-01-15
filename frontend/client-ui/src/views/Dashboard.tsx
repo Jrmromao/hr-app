@@ -30,20 +30,23 @@ export default observer(function Dashboard() {
     return (
         <MainLayout>
 
-            <Grid columns={3} >
+            <Grid columns={5} >
                 <Grid.Row>
                     <Grid.Column>
                         <Segment> {list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        {/* <Segment> 
-                            {JSON.stringify(userStore.user, null, 2)}
-                        
-                        </Segment> */}
+
                         <Segment> {create}</Segment>
                     </Grid.Column>
                     <Grid.Column>
                         <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
                     </Grid.Column>
 
                 </Grid.Row>
@@ -59,11 +62,581 @@ export default observer(function Dashboard() {
                     <Grid.Column>
                         <Segment> {del}</Segment>
                     </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
                 </Grid.Row>
             </Grid>
 
 
 
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
+
+
+
+            <Grid columns={5} >
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+
+                <Grid.Row>
+                    <Grid.Column>
+                        <Segment> {create}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <Segment> {del}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment> {list}</Segment>
+                    </Grid.Column>
+
+                </Grid.Row>
+            </Grid>
 
         </MainLayout>
     )

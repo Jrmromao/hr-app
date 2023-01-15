@@ -10,6 +10,29 @@ const ManageEmployeeView: React.FC = () => {
     <EmployeeLayout active='employee'>
 
 
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>
+            
+          </Grid.Column>
+
+
+        </Grid.Row>
+
+
+        <Grid.Row columns={3}>
+
+          <Grid.Column>
+            <p>Filter List</p>
+          </Grid.Column>
+        <Grid.Column>
+            <p>Filter List</p>
+          </Grid.Column>
+        </Grid.Row>
+
+      </Grid>
+
+
       <Table singleLine>
         <Table.Header>
           <Table.Row>

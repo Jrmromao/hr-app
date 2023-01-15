@@ -11,6 +11,12 @@ import ManageEmployeeView from '../views/ManageEmployeeView';
 import HomePage from '../views/HomePage';
 import ManageJobsView from '../views/ManageJobsView';
 import ManageCompanyView from '../views/ManageCompanyView';
+import WorkflowsView from '../views/WorkflowsView';
+import TimeOffView from '../views/TimeOffView';
+import DocumentsView from '../views/DocumentsView';
+import WorkScheduleView from '../views/WorkScheduleView';
+import WorkplacesView from '../views/WorkplacesView';
+import ActiveLogView from '../views/ActiveLogView';
 
 
 
@@ -38,15 +44,25 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/list' element={<Dashboard />} />
-            <Route path='/manage-employees' element={<ManageEmployeeView />} />
-            <Route path='/manage-company' element={<ManageCompanyView />} />
-            <Route path='/files' element={<ManageEmployeeView />} />
-            <Route path='/manage-jobs' element={<ManageJobsView />} />
-            <Route path='/settings' element={<Dashboard />} />
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='list' element={<Dashboard />} />
+
+
+            <Route path='manage-employees' element={<ManageEmployeeView />} />
+
+            <Route path='manage-company' element={<ManageCompanyView />} />
+            <Route path='manage-company/work-schedule' element={<WorkScheduleView />} />
+            <Route path='manage-company/active-log' element={<ActiveLogView />} />
+
+            <Route path='manage-company/time-off' element={<TimeOffView />} />
+            <Route path='manage-company/documents' element={<DocumentsView />} />
+            <Route path='manage-company/workflows' element={<WorkflowsView />} />
+            <Route path='manage-company/workplaces' element={<WorkplacesView />} />
+            <Route path='files' element={<ManageEmployeeView />} />
+            <Route path='manage-jobs' element={<ManageJobsView />} />
+            <Route path='settings' element={<Dashboard />} />
           </Route>
-          <Route path='/' index element={<HomePage />} />
+          <Route index element={<HomePage />} />
         </Routes>
       </BrowserRouter>
 
