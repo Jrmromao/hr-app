@@ -60,11 +60,21 @@ export class AppStack extends cdk.Stack {
     secondaryIndexes: ["name"],
   });
 
+  private roleTable = new GenericTable(this, {
+    tableName: "RoleTable",
+    primaryKey: "roleId",
+    createLambdaPath: "Create",
+    readLambdaPath: "Read",
+    updateLambdaPath: "Update",
+    deleteLambdaPath: "Delete",
+    servicePath: "RoleLambdas",
+    secondaryIndexes: ["name"],
+  });
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     this.initializeSuffix();
     this.initializeDocumentBucket();
-
 
     this.deploymentBucket = new Bucket(this, "hr-app-client-ui", {
       bucketName: config.uiBucketName,
@@ -128,75 +138,107 @@ export class AppStack extends cdk.Stack {
     });
 
     //Employee API integrations:
-    const reservationResource = this.api.root.addResource(
-      "api",
+    const employeeResource = this.api.root.addResource(
+      "employee-api",
       optionsWithCors
     );
-    reservationResource.addMethod(
+
+    employeeResource.addMethod(
       "POST",
       this.employeeTable.createLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    employeeResource.addMethod(
       "GET",
       this.employeeTable.readLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    employeeResource.addMethod(
       "PUT",
       this.employeeTable.updateLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    employeeResource.addMethod(
       "DELETE",
       this.employeeTable.deleteLambdaIntegration,
       optionsWithAuthorizer
     );
     //Office API integrations:
-    const officeResource = this.api.root.addResource("api", optionsWithCors);
-    reservationResource.addMethod(
+    const officeResource = this.api.root.addResource(
+      "office-api",
+      optionsWithCors
+    );
+
+    officeResource.addMethod(
       "POST",
       this.officeTable.createLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    officeResource.addMethod(
       "GET",
       this.officeTable.readLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    officeResource.addMethod(
       "PUT",
       this.officeTable.updateLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    officeResource.addMethod(
       "DELETE",
       this.officeTable.deleteLambdaIntegration,
       optionsWithAuthorizer
     );
+
     //Department API integrations:
-    const departmentResource = this.api.root.addResource(
-      "api",
+
+    const departementResource = this.api.root.addResource(
+      "department-api",
       optionsWithCors
     );
-    reservationResource.addMethod(
+
+    departementResource.addMethod(
       "POST",
       this.departmentTable.createLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    departementResource.addMethod(
       "GET",
       this.departmentTable.readLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    departementResource.addMethod(
       "PUT",
       this.departmentTable.updateLambdaIntegration,
       optionsWithAuthorizer
     );
-    reservationResource.addMethod(
+    departementResource.addMethod(
       "DELETE",
       this.departmentTable.deleteLambdaIntegration,
+      optionsWithAuthorizer
+    );
+
+    //Role API integrations:
+    const roleResource = this.api.root.addResource("role-api", optionsWithCors);
+
+    roleResource.addMethod(
+      "POST",
+      this.roleTable.createLambdaIntegration,
+      optionsWithAuthorizer
+    );
+    roleResource.addMethod(
+      "GET",
+      this.roleTable.readLambdaIntegration,
+      optionsWithAuthorizer
+    );
+    roleResource.addMethod(
+      "PUT",
+      this.roleTable.updateLambdaIntegration,
+      optionsWithAuthorizer
+    );
+    roleResource.addMethod(
+      "DELETE",
+      this.roleTable.deleteLambdaIntegration,
       optionsWithAuthorizer
     );
   }

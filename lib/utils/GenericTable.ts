@@ -12,9 +12,8 @@ export interface TableProps {
   readLambdaPath?: string;
   updateLambdaPath?: string;
   deleteLambdaPath?: string;
-
-
   secondaryIndexes?: string[];
+  sortKey?: string;
 }
 
 export class GenericTable {
@@ -105,11 +104,11 @@ export class GenericTable {
     const lambdaId = `${this.props.tableName}-${lambdaName}`;
 
     return new Lambda(this.stack, lambdaId, {
-      functionName: `${lambdaName}-lambda`,
+      functionName: `${lambdaId}-lambda`,
       runtime: Runtime.PYTHON_3_9,
       handler: "handler.main",
       code: Code.fromAsset(
-        join(__dirname, "..", "backend", "services", servicePath,lambdaName, "core")
+        join(__dirname, "..", "..", "backend", "services", servicePath, lambdaName, "core")
       ),
       environment: {
         TABLE_NAME: this.props.tableName,
