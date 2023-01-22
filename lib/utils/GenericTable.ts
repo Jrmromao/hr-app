@@ -7,10 +7,13 @@ import { join } from "path";
 export interface TableProps {
   tableName: string;
   primaryKey: string;
+  servicePath: string;
   createLambdaPath?: string;
   readLambdaPath?: string;
   updateLambdaPath?: string;
   deleteLambdaPath?: string;
+
+
   secondaryIndexes?: string[];
 }
 
@@ -47,6 +50,7 @@ export class GenericTable {
         name: this.props.primaryKey,
         type: AttributeType.STRING,
       },
+      
       tableName: this.props.tableName,
     });
   }
@@ -64,20 +68,20 @@ export class GenericTable {
     }
   }
   private createLambdas() {
-    if (this.props.createLambdaPath) {
-      this.createLambda = this.createSingleLambda(this.props.createLambdaPath);
+    if (this.props.createLambdaPath && this.props.servicePath) {
+      this.createLambda = this.createSingleLambda(this.props.servicePath, this.props.createLambdaPath);
       this.createLambdaIntegration = new LambdaIntegration(this.createLambda);
     }
-    if (this.props.readLambdaPath) {
-      this.readLambda = this.createSingleLambda(this.props.readLambdaPath);
+    if (this.props.readLambdaPath && this.props.servicePath) {
+      this.readLambda = this.createSingleLambda(this.props.servicePath, this.props.readLambdaPath);
       this.readLambdaIntegration = new LambdaIntegration(this.readLambda);
     }
-    if (this.props.updateLambdaPath) {
-      this.updateLambda = this.createSingleLambda(this.props.updateLambdaPath);
+    if (this.props.updateLambdaPath && this.props.servicePath) {
+      this.updateLambda = this.createSingleLambda(this.props.servicePath, this.props.updateLambdaPath);
       this.updateLambdaIntegration = new LambdaIntegration(this.updateLambda);
     }
-    if (this.props.deleteLambdaPath) {
-      this.deleteLambda = this.createSingleLambda(this.props.deleteLambdaPath);
+    if (this.props.deleteLambdaPath && this.props.servicePath) {
+      this.deleteLambda = this.createSingleLambda(this.props.servicePath, this.props.deleteLambdaPath);
       this.deleteLambdaIntegration = new LambdaIntegration(this.deleteLambda);
     }
   }
@@ -97,7 +101,7 @@ export class GenericTable {
     }
   }
 
-  private createSingleLambda(lambdaName: string): Lambda {
+  private createSingleLambda(servicePath: string, lambdaName: string): Lambda {
     const lambdaId = `${this.props.tableName}-${lambdaName}`;
 
     return new Lambda(this.stack, lambdaId, {
@@ -105,7 +109,7 @@ export class GenericTable {
       runtime: Runtime.PYTHON_3_9,
       handler: "handler.main",
       code: Code.fromAsset(
-        join(__dirname, "..", "backend", "services", lambdaName, "core")
+        join(__dirname, "..", "backend", "services", servicePath,lambdaName, "core")
       ),
       environment: {
         TABLE_NAME: this.props.tableName,
