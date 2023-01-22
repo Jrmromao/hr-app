@@ -11,7 +11,7 @@ import MyDateInput from "./MyDateInput";
 import MySelectInput from "./MySelectInput";
 
 
-export default observer(function NewJobForm() {
+export default observer(function NewOfficeForm() {
   const { userStore } = useStore();
 
   return (
@@ -21,7 +21,7 @@ export default observer(function NewJobForm() {
 
       <Header icon={'briefcase'}  content={'New job'}/>
 
-      <p>Enter a name for the new role and select the legal entities for which it will be available.</p>
+      {/* <p>Enter a name for the new role and select the legal entities for which it will be available.</p> */}
       <Formik
         initialValues={{ username: "", password: "", error: null }}
         onSubmit={(values, { setErrors }) =>
@@ -41,7 +41,7 @@ export default observer(function NewJobForm() {
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
             <MyTextInput name="rolaName" placeholder="" label='Role name' required={true} />
 
-            <MySelectInput name="location" placeholder="Select" label='Location' options={[]} />
+            <MySelectInput name="location" placeholder="Select" label='Location' options={[]}/>
 
             <ErrorMessage
               name="error"

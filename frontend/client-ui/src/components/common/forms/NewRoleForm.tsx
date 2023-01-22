@@ -11,38 +11,31 @@ import MyDateInput from "./MyDateInput";
 import MySelectInput from "./MySelectInput";
 
 
-export default observer(function NewLocationForm() {
-  const { userStore } = useStore();
+export default observer(function NewRoleForm() {
+  const { roleStore } = useStore();
 
   return (
 
     <Fragment>
       {/* <div style={{ display: 'flex', flexDirection: 'row' }}>   </div> */}
 
-      <Header icon={'briefcase'}  content={'New job'}/>
+      <Header icon={'briefcase'} content={'New Role'} />
 
       <p>Enter a name for the new role and select the legal entities for which it will be available.</p>
       <Formik
-        initialValues={{ username: "", password: "", error: null }}
+        initialValues={{ name: "", error: null }}
         onSubmit={(values, { setErrors }) =>
-          userStore
-            .login(values)
+          roleStore
+            .create(values)
             .catch((error) => setErrors({ error: error.message }))
         }
         validationSchema={Yup.object({
-          roleName: Yup.string().required(),
-          location: Yup.string().required(),
-
+          name: Yup.string().required(),
         })}
       >
         {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
-
-
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-            <MyTextInput name="rolaName" placeholder="" label='Role name' required={true} />
-
-            <MySelectInput name="location" placeholder="Select" label='Location' options={[]}/>
-
+            <MyTextInput name="name" placeholder="" label='Role name' required={true} />
             <ErrorMessage
               name="error"
               render={() => (
@@ -55,7 +48,6 @@ export default observer(function NewLocationForm() {
               )}
             />
             <br />
-
             <Segment color="teal">
               Set levels that indicate the degree of performance within a role. E.g. junior, mid and senior.
             </Segment>
@@ -71,7 +63,8 @@ export default observer(function NewLocationForm() {
             />
           </Form>
         )}
-      </Formik>   </Fragment>);
+      </Formik>
+    </Fragment>);
 
 
 });

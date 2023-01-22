@@ -10,7 +10,7 @@ import MainLayout from "../layout/MainLayout";
 import { useStore } from "../stores/store";
 
 export default observer(function Dashboard() {
-    const { userStore, employeeStore } = useStore();
+    const { userStore, employeeStore, departmentStore } = useStore();
 
     const history = useNavigate();
     const [list, setList] = useState('')
@@ -18,25 +18,26 @@ export default observer(function Dashboard() {
     const [update, setUpdate] = useState('')
     const [del, setDel] = useState('')
 
+
     useEffect(() => {
 
         employeeStore.list().then(res => setList(res))
-        // employeeStore.create({
-        //     firstName:'',
-        //     lastName:'',
-        //     grossSalary: 0,
-        //     email:'',
-        //     employeeNumb:''
+        employeeStore.create({
+            firstName:'',
+            lastName:'',
+            grossSalary: 0,
+            email:'',
+            employeeNumb:''
 
-        // }).then(res => setCreate(res))
+        }).then(res => setCreate(res))
         employeeStore.update().then(res => setUpdate(res))
-        employeeStore.delete().then(res => setDel(res))
-
+        departmentStore.create({name:''}).then(res => setDel(res))
+ 
     }, [employeeStore, setList, setUpdate, setCreate, setDel])
 
     return (
         <MainLayout>
-            {/* <Grid columns={5} >
+            <Grid columns={5} >
                 <Grid.Row>
                     <Grid.Column>
                         <Segment color='teal'> {list}</Segment>
@@ -51,10 +52,11 @@ export default observer(function Dashboard() {
                         <Segment> {list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {list}</Segment>
+                        <Segment> {del}</Segment>
                     </Grid.Column>
+        
                 </Grid.Row>
-            </Grid> */}
+            </Grid>
 
 
             <h1>Dashboard</h1>

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom';
 import { Grid, Menu } from 'semantic-ui-react';
 import NewEmployeeForm from '../components/common/forms/NewEmployeeForm';
-import NewJobForm from '../components/common/forms/NewJobForm';
+import NewJobForm from '../components/common/forms/NewRoleForm';
 import { useStore } from '../stores/store';
 import MainLayout from './MainLayout';
 

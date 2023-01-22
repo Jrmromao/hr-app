@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Grid, Menu, Search, Table, Image, Button, Segment } from 'semantic-ui-react'
+import NewDepartmentForm from '../components/common/forms/NewDepartmentForm'
 import NewEmployeeForm from '../components/common/forms/NewEmployeeForm'
+import NewRoleForm from '../components/common/forms/NewRoleForm'
 import BasicLayout from '../layout/BasicLayout'
 import EmployeeLayout from '../layout/EmployeeLayout'
 import MainLayout from '../layout/MainLayout'
@@ -29,7 +31,7 @@ const ManageEmployeeView: React.FC = () => {
         <Grid.Column width={3}>
           <Segment color='blue'>
 
-            <Button icon='plus' onClick={() => modalStore.openModal(<NewEmployeeForm/>)} />
+            <Button icon='plus' onClick={() => modalStore.openModal(<NewRoleForm/>)} />
           </Segment>
         </Grid.Column>
       </Grid.Row>

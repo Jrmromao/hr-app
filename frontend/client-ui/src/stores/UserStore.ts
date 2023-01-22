@@ -49,13 +49,14 @@ export default class UserStore {
 
     await Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log(user);
 
         this.user = {
           cognitoUser: user as CognitoUser,
           userName: user.getUsername(),
           token: user.getSignInUserSession()!.getIdToken().getJwtToken(),
         };
+        console.log(this.user);
+        
       })
       .catch((error) => console.log(error));
   };
