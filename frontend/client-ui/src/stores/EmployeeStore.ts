@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify";
 import AWS from "aws-sdk";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import { CognitoUser } from "@aws-amplify/auth";
+import { EmployeeFormData } from "../models/employee";
 
 export default class EmployeeStore {
   user: User | null = null;
@@ -32,10 +33,17 @@ export default class EmployeeStore {
     return;
   };
   // create
-  create = async () => {
+  create = async (data: EmployeeFormData) => {
     try {
-      const result = await agent.employee.create();
+      const result = await agent.employee.create(data);
+
+
+      console.log(result);
+      
       return result;
+
+
+
     } catch (error) {
       console.log(error);
     }

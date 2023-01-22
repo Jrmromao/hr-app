@@ -12,7 +12,7 @@ import MySelectInput from "./MySelectInput";
 
 
 export default observer(function NewEmployeeForm() {
-  const { userStore } = useStore();
+  const { employeeStore } = useStore();
 
   return (
 
@@ -23,42 +23,44 @@ export default observer(function NewEmployeeForm() {
       <Header content='Add Employee' icon={'user plus'} />
       <p>Fill in the employee's personal information.</p>
       <Formik
-        initialValues={{ username: "", password: "", error: null }}
+        initialValues={{ firstName: '',lastName: '', grossSalary: 0, employeeNumb: '', email: '', error: null }}
         onSubmit={(values, { setErrors }) =>
-          userStore
-            .login(values)
+          employeeStore.create(values)
             .catch((error) => setErrors({ error: error.message }))
         }
         validationSchema={Yup.object({
+          employeeNumb: Yup.string().required(),
           email: Yup.string().required(),
-          name: Yup.string().required(),
-          dob: Yup.string().required(),
-          department: Yup.string().required(),
+          firstName: Yup.string().required(),
+          lastName: Yup.string().required(),
+          // dob: Yup.string().required(),
+          // grossSalary: Yup.string().required(),
         })}
       >
         {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
 
 
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-            <MyTextInput name="email" placeholder="Email" label='Email' type="email" />
+            <MyTextInput name="employeeNumb" placeholder="Employee number" label='Employee number' />
+
             <div style={{ display: 'flex' }}>
               <div style={{ marginRight: 9 }}>
-                <MyTextInput name="name" placeholder="Name" label='First Name' /></div>
+                <MyTextInput name="firstName" placeholder="First Name" label='First Name' /></div>
               <div style={{ marginLeft: 3 }}>
-                <MyTextInput name="name" placeholder="Name" label='Last Name' /></div>
+                <MyTextInput name="lastName" placeholder="Last Name" label='Last Name' /></div>
             </div>
-            <MySelectInput name="location" placeholder="Select" label='Location' options={[]} />
+            <MyTextInput name="email" placeholder="Email" label='Email' type='email' />
 
-            <MySelectInput name="role" placeholder="Select" label='Role' options={[]} />
-            <MySelectInput name="roleLevel" placeholder="Select" label='Level' options={[]} />
+            {/* <MySelectInput name="role" placeholder="Select" label='Role' options={[]} /> */}
+            {/* <MyTextInput name="grossSalary" placeholder="Salary" label='Gross Salary' type='number' /> */}
+            {/* <MySelectInput name="roleLevel" placeholder="Select" label='Level' options={[]} /> */}
 
-            <div style={{ display: 'flex' }}>
+            {/* <div style={{ display: 'flex' }}>
               <div style={{ marginRight: 9 }}>
-                <MySelectInput name="salaryType" placeholder="Select" label='Salary type' options={['Montly', 'Yearly', 'Weekly', 'Daily']} /></div>
+                <MySelectInput name="salaryType" placeholder="Select" label='Salary type' options={[]} /></div>
               <div style={{ marginLeft: 3 }}>
                 <MyTextInput name="grossSalary" placeholder="EUR" label='Gross salary' type="number" /></div>
-            </div>
-
+            </div> */}
 
             <ErrorMessage
               name="error"

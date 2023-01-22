@@ -7,13 +7,13 @@ interface Props {
     name: string;
     options: any;
     label?: string;
-    required?: boolean;
+    
 }
 
 export default function MySelectInput(props: Props) {
     const [field, meta, helpers] = useField(props.name);
     return (
-        <Form.Field error={meta.touched && !!meta.error} required={props.required}>
+        <Form.Field error={meta.touched && !!meta.error}>
             <label>{props.label}</label>
             <Select
                 

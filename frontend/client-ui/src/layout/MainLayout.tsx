@@ -31,8 +31,8 @@ const MainLayout: React.FC<IProps> = ({ children }) => {
         <Grid.Column width={2} className={'main-menu-sidebar'}>
 
           <Menu secondary vertical fluid>
+            <Menu.Item active={active == '/dashboard'} content="Dashboard" as={NavLink} to="/dashboard" />
 
-            <IconMenyItem redirectTo="/dashboard" iconName="users" name="Home" />
             <Menu.Item active={active == '/list'} content="My Profile" as={NavLink} to="/list" />
             {/* <Menu.Item active={active == '/list'} content="Time off" as={NavLink} to="/list" />
             <Menu.Item active={active == '/list'} content="My documents" as={NavLink} to="/list" /> */}

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Button, Grid, Segment, Table } from 'semantic-ui-react'
+import { Button, Grid, Search, Segment, Table } from 'semantic-ui-react'
 import EmployeeLayout from '../layout/EmployeeLayout'
 
 
@@ -8,13 +8,13 @@ const ManageJobsView: React.FC = () => {
     return (
         <EmployeeLayout active='jobs' itemLabel='New job'>
 
+            <h2>Job</h2>
             <Grid>
 
 
                 <Grid.Row columns='2'>
-                    <Grid.Column width={6}>The jobs are specific activities that contribute to the company’s goals, like a software engineer or a sales executive.</Grid.Column>
+                    <Grid.Column width={6}><Search style={{ width: '100% !important' }} /></Grid.Column>
                     <Grid.Column width={10}>
-                        <Segment color='red'>this will show if: employees without a role or a level</Segment>
                     </Grid.Column>
                 </Grid.Row>
 
@@ -60,14 +60,6 @@ const ManageJobsView: React.FC = () => {
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
-
-
-
-
-
-
-
-
         </EmployeeLayout>
     )
 }

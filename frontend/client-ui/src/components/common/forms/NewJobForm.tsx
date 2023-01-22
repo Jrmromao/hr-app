@@ -41,7 +41,7 @@ export default observer(function NewJobForm() {
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
             <MyTextInput name="rolaName" placeholder="" label='Role name' required={true} />
 
-            <MySelectInput name="location" placeholder="Select" label='Location' options={[]} required={true} />
+            <MySelectInput name="location" placeholder="Select" label='Location' options={[]} />
 
             <ErrorMessage
               name="error"
