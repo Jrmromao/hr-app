@@ -1,85 +1,147 @@
 .ui.container {
-  width: 76%;
+  /* width: 76%; */
   position: unset !important;
 }
 
+/* .thirteen.wide.column{
+  width: 9990px !important;
+} */
+
 .header-nav {
-  padding-top: 10px;
+  /* padding-top: 10px; */
   height: 120px;
-  background-color: #fff ;
+  background-color: #fff;
   /* border-bottom-style: solid !important;
   border-bottom-width: 26px !important;
   border-bottom: teal !important;
   border: teal solid; */
   border-width: medium !important;
-  border-bottom:orange;
+  border-bottom: orange;
   border-bottom-style: solid;
+
+}
+
+.ui.menu .header-nav {
+  border-left: 10px solid rgba(39, 36, 35, 0.1);
+}
+
+
+/* .ui.secondary.menu .active.item {
+  background-color: #515164;
+  color: #fff; 
+
   
-}
-.ui.menu .header-nav 
-{
-  border-left: 10px solid rgba(38, 35, 34, 0.1);
-}
+} */
 
 
-.ui.secondary.menu .active.item {
-background-color: #515164;
-color: #fff
-}
- 
-
-.nav-logo{
-  margin-top: 1em;
+.nav-logo {
+  /* margin-top: 0em; */
   margin-bottom: 2.5em;
   width: 100%;
-  color: tomato;
+  /* color: rgb(205, 201, 98); */
   font-weight: bolder;
   height: 44px;
-  padding: 5px;
-  background-color: #cfc3c3;
+  padding: 10px;
+  background-color: #c3cecf;
 }
 
 .main-content-container {
-margin-top: 3em;
-height:max-content;
-   /*  width: 76%;
-  background-color: #EAEAEA;
-  padding: 25px; */
+  height: max-content;
+  width: 90%;
 }
 
-/* .ui.button {
-  background-color: #fff;
-  border: none;
-} */
 
-/* .ui.menu .item {
-  position: unset !important;
-} */
+.main-menu-sidebar {
+  background-color: #3C4B4D;
+  color: white !important;
+  height: 100vh;
+  position: sticky !important;
+  top: 0 !important;
+  padding-left: 19px !important;
 
-.dashboard-status{
+}
+
+
+.divider_sidebar {
+  align-self: stretch;
+  border-top: 1px solid hsla(0, 0%, 100%, .15);
+  height: 0;
+  margin: 0 auto;
+}
+
+.dashboard-status {
   display: flex;
-align-items: stretch;
+  align-items: stretch;
   /* align-items: center; */
   /* flex-direction: row; */
 }
 
-.dashboard-status .segment{
+.dashboard-status .segment {
   height: 190px;
   width: 150px;
   margin: 20px;
   padding: 5px;
 }
-.ui.segment:first-child {
-  margin-top: 20px !important	;
+
+.ui.container {
+  position: unset !important;
+  width: 100%;
 }
+
+
+
+
+/* 
+.stacked.icons{
+  position: relative;
+  display: table-cell;
+    opacity: 1;
+    font-size: 1.5em;
+    padding-top: 0;
+    vertical-align: middle;
+} */
+
+
+
+/* .stacked.icons > .plus.icon{
+  position: absolute;
+  left: 0.8em;
+  top: -0.2em;
+} */
+
+
+.sidebar-icon-menu-item{
+  display: flex;
+  background-color: #515164;
+  color: #fff; 
+  width: 100% !important;
+}
+
+.sidebar-icon-menu-item .icon{
+  clear: both;
+  flex-direction: row !important;
+}
+
+.ui .fluid .secondary .vertical .sidebar-footer-options .menu{
+  position: fixed !important;
+  bottom: 0 !important;
+}
+
+
+.stacked.icons>.bottom.left.attached.icon {
+  position: absolute;
+  left: 2.3em;
+  top: 0.4em;
+}
+
+/* .ui.segment:first-child {
+  margin-top: 20px !important	;
+} */
 
 /* 
 
- .ui.container {
-  position: unset !important;
-  max-width: 1770px;
-  width: 79%;
-}
+
+
 
 .header-nav {
   padding-top: 77px;

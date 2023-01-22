@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { EmployeeFormData } from "../models/employee";
 import { store } from "../stores/store";
 
-axios.defaults.baseURL = 'https://1y0sb2otl7.execute-api.us-east-1.amazonaws.com/prod';
+axios.defaults.baseURL = 'https://hezcs2pkd2.execute-api.us-east-1.amazonaws.com/prod/';
 
 
 axios.interceptors.request.use((config: any) => {
@@ -22,7 +23,7 @@ axios.interceptors.request.use((config: any) => {
 
   const employee = {
     list: () => requests.get<any>("/api"),
-    create: () => requests.post<any>("/api", {}),
+    create: (employeeFormData: EmployeeFormData) => requests.post<any>("/api", employeeFormData),
     update: () => requests.put<any>("/api", {}),
     delete: () => requests.del<any>("/api"),
   };

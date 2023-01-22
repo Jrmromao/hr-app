@@ -9,6 +9,7 @@ import { Auth } from "aws-amplify";
 import AWS from "aws-sdk";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import { CognitoUser } from "@aws-amplify/auth";
+
 export default class UserStore {
   user: User | null = null;
   refreshTokenTimeout: any;
@@ -44,8 +45,12 @@ export default class UserStore {
   };
 
   getUser = async () => {
-    Auth.currentAuthenticatedUser()
+    console.log("Calling getUser()");
+
+    await Auth.currentAuthenticatedUser()
       .then((user) => {
+        console.log(user);
+
         this.user = {
           cognitoUser: user as CognitoUser,
           userName: user.getUsername(),

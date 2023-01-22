@@ -5,11 +5,17 @@ import DatePicker, { ReactDatePickerProps } from 'react-datepicker'
 
 
 
-export default function MyDateInput(props: Partial<ReactDatePickerProps>) {
+interface Props extends ReactDatePickerProps {
+    label?: string;
+    required?: boolean;
+}
+
+export default function MyDateInput(props: Partial<Props>) {
     const [field, meta, helpers] = useField(props.name!);
     return (
 
-        <Form.Field error={meta.touched && !!meta.error}>
+        <Form.Field error={meta.touched && !!meta.error} required={props.required}>
+            <label>{props.label}</label>
             <DatePicker
                 {...field}
                 {...props}
