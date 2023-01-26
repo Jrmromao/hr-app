@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Image, Segment } from "semantic-ui-react";
 import BasicLayout from "../layout/BasicLayout";
@@ -13,7 +13,7 @@ export default observer(function Dashboard() {
     const { userStore, employeeStore, departmentStore } = useStore();
 
     const history = useNavigate();
-    const [list, setList] = useState('')
+    const [list, setList] = useState([])
     const [create, setCreate] = useState('')
     const [update, setUpdate] = useState('')
     const [del, setDel] = useState('')
@@ -21,7 +21,7 @@ export default observer(function Dashboard() {
 
     useEffect(() => {
 
-        employeeStore.list().then(res => setList(res))
+       
         employeeStore.create({
             firstName:'',
             lastName:'',
@@ -30,8 +30,10 @@ export default observer(function Dashboard() {
             employeeNumb:''
 
         }).then(res => setCreate(res))
+
+        employeeStore.list().then(res => setList(res!))
         employeeStore.update().then(res => setUpdate(res))
-        departmentStore.create({name:''}).then(res => setDel(res))
+        employeeStore.delete().then(res => setDel(res))
  
     }, [employeeStore, setList, setUpdate, setCreate, setDel])
 
@@ -40,19 +42,19 @@ export default observer(function Dashboard() {
             <Grid columns={5} >
                 <Grid.Row>
                     <Grid.Column>
-                        <Segment color='teal'> {list}</Segment>
+                        <Segment color='teal'> Calling the list  api endpoint:{list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {create}</Segment>
+                        <Segment color='red'> Calling the create api endpoint: {create}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {create}</Segment>
+                        <Segment color='green'>Calling the create api endpoint: {update}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {list}</Segment>
+                        <Segment color='blue'> Calling the list api endpoint:{list}</Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <Segment> {del}</Segment>
+                        <Segment color='yellow'>Calling the del  api endpoint: {del}</Segment>
                     </Grid.Column>
         
                 </Grid.Row>

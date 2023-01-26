@@ -1,3 +1,4 @@
+import json
 import os
 
 
@@ -10,5 +11,5 @@ def main(event, _):
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': '*'
       },
-      "body": 'Hello from Update Department lambda!'
+     'body': json.dumps('Hello from  '+event['resource']+' update  Lambda!')
   }

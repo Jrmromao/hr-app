@@ -1,6 +1,6 @@
-import { uuid } from "aws-sdk/clients/customerprofiles";
+import {uuid} from "aws-sdk/clients/customerprofiles";
 
-export interface OfficeFormData{
+export interface OfficeFormData {
     officeId: uuid
     name: string
 }

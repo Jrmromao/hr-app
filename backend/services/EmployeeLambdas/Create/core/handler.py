@@ -11,5 +11,5 @@ def main(event, _):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': '*'
         },
-        'body': json.dumps('Hello from  create  Lambda!')
+        'body': json.dumps('Hello from  '+event['resource']+' create  Lambda!')
     }

@@ -4,12 +4,14 @@ import os
 
 def main(event, _):
     json_region = os.environ['AWS_REGION']
+    
+    print(event)
     return {
         'statusCode': 200,
         'headers': {
-            'Access-Control-Allow-Headers': 'Content-Type',
+            "Content-Type": "application/json",
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': '*'
         },
-        'body': json.dumps('Hello from  read  Lambda!')
+        'body': json.dumps('Hello from  '+event['resource']+' read  Lambda!')
     }

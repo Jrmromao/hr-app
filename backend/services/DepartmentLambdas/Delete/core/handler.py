@@ -1,3 +1,4 @@
+import json
 import os
 
 
@@ -11,5 +12,5 @@ def main(event, _):
             'Access-Control-Allow-Methods': '*'
             
         },
-        "body": 'Hello from Delete Department lambda!'
+       'body': json.dumps('Hello from  '+event['resource']+' delete  Lambda!')
     }

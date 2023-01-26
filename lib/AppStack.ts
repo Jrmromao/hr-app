@@ -16,6 +16,7 @@ import { AuthorizerWrapper } from "./auth/AuthorizerWrapper";
 import { config } from "./config/configuration";
 import { GenericTable } from "./utils/GenericTable";
 import { Policies } from "./Policies";
+import { Code, LayerVersion, Runtime } from "aws-cdk-lib/aws-lambda";
 
 export class AppStack extends cdk.Stack {
   private suffix: string;
@@ -27,6 +28,18 @@ export class AppStack extends cdk.Stack {
   private authorizer: AuthorizerWrapper;
   private policies: Policies;
 
+
+  private layerlibs = new LayerVersion(this, `third-party-libs`, {
+    compatibleRuntimes: [
+      Runtime.PYTHON_3_9,
+      Runtime.PYTHON_3_8,
+    ],
+    code: Code.fromAsset(join(__dirname,'..', 'layer')),
+    description: 'Uses a 3rd party libraries',
+    layerVersionName: `third-party-libs`
+  });
+
+
   private employeeTable = new GenericTable(this, {
     tableName: "EmployeeTable",
     primaryKey: "employeeId",
@@ -36,6 +49,7 @@ export class AppStack extends cdk.Stack {
     deleteLambdaPath: "Delete",
     servicePath: "EmployeeLambdas",
     secondaryIndexes: ["user"],
+    layerVersion: this.layerlibs,
   });
 
   private officeTable = new GenericTable(this, {
@@ -47,6 +61,7 @@ export class AppStack extends cdk.Stack {
     deleteLambdaPath: "Delete",
     servicePath: "OfficeLambdas",
     secondaryIndexes: ["name"],
+    layerVersion: this.layerlibs,
   });
 
   private departmentTable = new GenericTable(this, {
@@ -58,6 +73,7 @@ export class AppStack extends cdk.Stack {
     deleteLambdaPath: "Delete",
     servicePath: "DepartmentLambdas",
     secondaryIndexes: ["name"],
+    layerVersion: this.layerlibs,
   });
 
   private roleTable = new GenericTable(this, {
@@ -69,6 +85,7 @@ export class AppStack extends cdk.Stack {
     deleteLambdaPath: "Delete",
     servicePath: "RoleLambdas",
     secondaryIndexes: ["name"],
+    layerVersion: this.layerlibs,
   });
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
