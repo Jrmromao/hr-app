@@ -9,6 +9,7 @@ import EmployeeLayout from '../layout/EmployeeLayout'
 import MainLayout from '../layout/MainLayout'
 import { useStore } from '../stores/store'
 import userIcon from '/assets/icons/person-plus-fill.png'
+import SignUpForm from "../components/common/forms/SignUpForm";
 
 
 const ManageEmployeeView: React.FC = () => {
@@ -31,7 +32,7 @@ const ManageEmployeeView: React.FC = () => {
         <Grid.Column width={3}>
           <Segment color='blue'>
 
-            <Button icon='plus' onClick={() => modalStore.openModal(<NewRoleForm/>)} />
+            <Button icon='plus' onClick={() => modalStore.openModal(<SignUpForm/>)} />
           </Segment>
         </Grid.Column>
       </Grid.Row>

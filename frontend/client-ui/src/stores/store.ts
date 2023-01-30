@@ -7,6 +7,7 @@ import ModalStore from "./modalStore";
 import OfficeStore from "./OfficeStore";
 import RoleStore from "./RoleStore";
 import UserStore from "./UserStore";
+import CompanyStore from "./CompanyStore";
 
 
 interface Store {
@@ -17,10 +18,12 @@ interface Store {
     layoutStore: LayoutStore;
     roleStore: RoleStore;
     departmentStore: DepartmentStore;
-    officeStore: OfficeStore
+    officeStore: OfficeStore;
+    companyStore: CompanyStore;
 }
 
 export const store: Store = {
+    companyStore: new CompanyStore(),
     userStore: new UserStore(),
     modalStore: new ModalStore(),
     commonStore: new CommonStore(),

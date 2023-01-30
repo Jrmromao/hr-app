@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import React, { Fragment } from "react";
 import { Button, Header, Label} from "semantic-ui-react";
 import * as Yup from "yup";
-import MyTextInput from "./MyTextInput";
+import MyTextInput from "../FormComponents/MyTextInput";
 import { useStore } from "../../../stores/store";
 
 

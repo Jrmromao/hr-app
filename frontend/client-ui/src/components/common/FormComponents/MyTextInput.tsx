@@ -16,8 +16,6 @@ export default function MyTextInput(props: Props) {
     return (
 
         <Form.Field  error={meta.touched && !!meta.error} required={props.required}>
-
-            
             <label>{props.label}</label>
             <input {...field} {...props} />
             {meta.touched && meta.error ? (

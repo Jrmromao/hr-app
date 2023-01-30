@@ -45,7 +45,7 @@ export default class UserStore {
   };
 
   getUser = async () => {
-    console.log("Calling getUser()");
+    console.log("Calling getUser()", this.user);
 
     await Auth.currentAuthenticatedUser()
       .then((user) => {

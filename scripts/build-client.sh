@@ -1,6 +1,10 @@
 #!/bin/bash 
-echo 'installing pip dependencies'
-pip install -r ./backend/services/DepartmentLambdas/Create/requirements.txt -t ./layer/
+echo '[CompanyLambdas] installing pip dependencies'
+pip install -r ./backend/services/CompanyLambdas/Create/requirements.txt -t ./layer/
+echo '[DepartmentLambdas] installing pip dependencies'
+echo '[EmployeeLambdas] installing pip dependencies '
+echo '[OfficeLambdas] installing pip dependencies '
+echo '[RoleLambdas] installing pip dependencies \n'
 echo 'DONE with PIP'
 cd frontend/client-ui
 rm -r build

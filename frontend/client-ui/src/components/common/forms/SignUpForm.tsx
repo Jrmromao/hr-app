@@ -7,35 +7,46 @@ import * as Yup from "yup";
 import MyTextInput from "../FormComponents/MyTextInput";
 import {useStore} from "../../../stores/store";
 
-import MyDateInput from "../FormComponents/MyDateInput";
 import MySelectInput from "../FormComponents/MySelectInput";
 
 
-export default observer(function NewRoleForm() {
-    const {roleStore} = useStore();
+export default observer(function SignUpForm() {
+    const {companyStore} = useStore();
 
     return (
 
         <Fragment>
             {/* <div style={{ display: 'flex', flexDirection: 'row' }}>   </div> */}
 
-            <Header icon={'briefcase'} content={'New Role'}/>
+            <Header icon={'briefcase'} content={'New job'}/>
 
-            <p>Enter a name for the new role and select the legal entities for which it will be available.</p>
+            {/* <p>Enter a name for the new role and select the legal entities for which it will be available.</p> */}
             <Formik
-                initialValues={{name: "", error: null}}
+                initialValues={{companyName: "", password: "", email: "", phoneNumber: "", numEmployees: 0, error: null}}
+
                 onSubmit={(values, {setErrors}) =>
-                    roleStore
-                        .create(values)
+                    companyStore
+                        .signUp(values)
                         .catch((error) => setErrors({error: error.message}))
                 }
                 validationSchema={Yup.object({
-                    name: Yup.string().required(),
+                    companyName: Yup.string().required(),
+                    email: Yup.string().required(),
+                    password: Yup.string().required(),
+                    phoneNumber: Yup.string().required(),
+                    numEmployees: Yup.number().required(),
                 })}
             >
                 {({handleSubmit, isSubmitting, errors, isValid, dirty}) => (
+
+
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-                        <MyTextInput name="name" placeholder="" label='Role name' required={true}/>
+                        <MyTextInput name="companyName" placeholder="" label='Company name' required={true}/>
+                        <MyTextInput name="email" label='Work email address' placeholder='' type='email'
+                                     required={true}/>
+                        <MyTextInput name="password" label='Password' placeholder='' type={'password'} required={true}/>
+                        <MyTextInput name="phoneNumber" label='Phone number' placeholder='' required={true}/>
+                        <MyTextInput name="numEmployees" label='Number of employees' placeholder='' type={'number'} required={true}/>
                         <ErrorMessage
                             name="error"
                             render={() => (
@@ -48,24 +59,23 @@ export default observer(function NewRoleForm() {
                             )}
                         />
                         <br/>
+
                         <Segment color="teal">
-                            Set levels that indicate the degree of performance within a role. E.g. junior, mid and
-                            senior.
+                           Company Data
                         </Segment>
                         <br/>
                         <Button
                             loading={isSubmitting}
                             disabled={!isValid || !dirty || isSubmitting}
                             positive
-                            name='login'
-                            content="Login"
+                            name='sign-up'
+                            content="Sign Up"
                             type="submit"
                             fluid
                         />
                     </Form>
                 )}
-            </Formik>
-        </Fragment>);
+            </Formik> </Fragment>);
 
 
 });
