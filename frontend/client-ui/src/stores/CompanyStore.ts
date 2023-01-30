@@ -47,7 +47,7 @@ export default class CompanyStore {
     // update
     update = async (id: string) => {
         try {
-            const result = await agent.company.update();
+            const result = await agent.company.update(id);
             return result;
         } catch (error) {
             console.log(error);

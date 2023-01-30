@@ -32,7 +32,7 @@ export default observer(function Dashboard() {
         }).then(res => setCreate(res))
 
         companyStore.list().then(res => setList(res!))
-        companyStore.update().then(res => setUpdate(res))
+        companyStore.update('').then(res => setUpdate(res))
         companyStore.delete().then(res => setDel(res))
 
     }, [employeeStore, companyStore, setList, setUpdate, setCreate, setDel])
