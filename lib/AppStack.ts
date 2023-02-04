@@ -16,7 +16,8 @@ import {AuthorizerWrapper} from "./auth/AuthorizerWrapper";
 import {config} from "./config/configuration";
 import {GenericTable} from "./utils/GenericTable";
 import {Policies} from "./Policies";
-import {Code, LayerVersion, Runtime} from "aws-cdk-lib/aws-lambda";
+import {Code, ILayerVersion, LayerVersion, Runtime} from "aws-cdk-lib/aws-lambda";
+import {GenericLambda} from "./utils/GenericLambda";
 
 export class AppStack extends cdk.Stack {
     private suffix: string;
@@ -38,63 +39,52 @@ export class AppStack extends cdk.Stack {
         description: 'Uses a 3rd party libraries',
         layerVersionName: `third-party-libs`
     });
-   private companyTable = new GenericTable(this, {
-        tableName: "Company",
-        primaryKey: "companyId",
-        createLambdaPath: "Create",
-        readLambdaPath: "Read",
-        updateLambdaPath: "Update",
-        deleteLambdaPath: "Delete",
+
+    private companyLambda = new GenericLambda(this, {
+        lambdaName: "Company",
         servicePath: "CompanyLambdas",
-        secondaryIndexes: ["companyName"],
+        createLambda: "Create",
+        readLambda: "Read",
+        updateLambda: "Update",
+        deleteLambda: "Delete",
         layerVersion: this.layerLibs,
     });
 
-    private employeeTable = new GenericTable(this, {
-        tableName: "Employee",
-        primaryKey: "employeeId",
-        createLambdaPath: "Create",
-        readLambdaPath: "Read",
-        updateLambdaPath: "Update",
-        deleteLambdaPath: "Delete",
+    private employeeLambda = new GenericLambda(this, {
+        lambdaName: "Employee",
         servicePath: "EmployeeLambdas",
-        secondaryIndexes: ["user"],
+        createLambda: "Create",
+        readLambda: "Read",
+        updateLambda: "Update",
+        deleteLambda: "Delete",
         layerVersion: this.layerLibs,
-    });
+    })
 
-    private officeTable = new GenericTable(this, {
-        tableName: "Office",
-        primaryKey: "officeId",
-        createLambdaPath: "Create",
-        readLambdaPath: "Read",
-        updateLambdaPath: "Update",
-        deleteLambdaPath: "Delete",
+    private officeLambda = new GenericLambda(this, {
+        lambdaName: "Office",
+        createLambda: "Create",
+        readLambda: "Read",
+        updateLambda: "Update",
+        deleteLambda: "Delete",
         servicePath: "OfficeLambdas",
-        secondaryIndexes: ["name"],
         layerVersion: this.layerLibs,
     });
-
-    private departmentTable = new GenericTable(this, {
-        tableName: "Department",
-        primaryKey: "departmentId",
-        createLambdaPath: "Create",
-        readLambdaPath: "Read",
-        updateLambdaPath: "Update",
-        deleteLambdaPath: "Delete",
+    private departmentLambda = new GenericLambda(this, {
+        lambdaName: "Department",
+        createLambda: "Create",
+        readLambda: "Read",
+        updateLambda: "Update",
+        deleteLambda: "Delete",
         servicePath: "DepartmentLambdas",
-        secondaryIndexes: ["name"],
         layerVersion: this.layerLibs,
     });
-
-    private roleTable = new GenericTable(this, {
-        tableName: "Role",
-        primaryKey: "roleId",
-        createLambdaPath: "Create",
-        readLambdaPath: "Read",
-        updateLambdaPath: "Update",
-        deleteLambdaPath: "Delete",
+    private roleLambda = new GenericLambda(this, {
+        lambdaName: "Role",
+        createLambda: "Create",
+        readLambda: "Read",
+        updateLambda: "Update",
+        deleteLambda: "Delete",
         servicePath: "RoleLambdas",
-        secondaryIndexes: ["name"],
         layerVersion: this.layerLibs,
     });
 
@@ -102,7 +92,6 @@ export class AppStack extends cdk.Stack {
         super(scope, id, props);
         this.initializeSuffix();
         this.initializeDocumentBucket();
-
         this.deploymentBucket = new Bucket(this, "hr-app-client-ui", {
             bucketName: config.uiBucketName,
             publicReadAccess: true,
@@ -112,27 +101,23 @@ export class AppStack extends cdk.Stack {
             autoDeleteObjects: true,
         });
 
-        const hrAppCloudFront = new CloudFrontWebDistribution(
-            this,
-            "hr-app-distribution",
-            {
+        new GenericTable(this, {
+            tableName: "Company",
+            primaryKey: "companyId",
+            secondaryIndexes: ["companyName"],
+        });
+
+        const hrAppCloudFront = new CloudFrontWebDistribution(this, "hr-app-distribution", {
                 originConfigs: [
                     {
-                        behaviors: [
-                            {
-                                isDefaultBehavior: true,
-                            },
-                        ],
-                        s3OriginSource: {
-                            s3BucketSource: this.deploymentBucket,
-                        },
+                        behaviors: [{isDefaultBehavior: true,},],
+                        s3OriginSource: {s3BucketSource: this.deploymentBucket,},
                     },
                 ],
             }
         );
 
         this.policies = new Policies(this.documentBucket);
-
         this.authorizer = new AuthorizerWrapper(this, this.api, this.policies);
 
         const optionsWithAuthorizer: MethodOptions = {
@@ -172,22 +157,22 @@ export class AppStack extends cdk.Stack {
 
         companyResource.addMethod(
             "POST",
-            this.companyTable.createLambdaIntegration,
+            this.companyLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         companyResource.addMethod(
             "GET",
-            this.companyTable.readLambdaIntegration,
+            this.companyLambda.readLambdaIntegration,
             optionsWithAuthorizer
         );
         companyResource.addMethod(
             "PUT",
-            this.companyTable.updateLambdaIntegration,
+            this.companyLambda.updateLambdaIntegration,
             optionsWithAuthorizer
         );
         companyResource.addMethod(
             "DELETE",
-            this.companyTable.deleteLambdaIntegration,
+            this.companyLambda.deleteLambdaIntegration,
             optionsWithAuthorizer
         );
 
@@ -199,22 +184,22 @@ export class AppStack extends cdk.Stack {
         );
         employeeResource.addMethod(
             "POST",
-            this.employeeTable.createLambdaIntegration,
+            this.employeeLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         employeeResource.addMethod(
             "GET",
-            this.employeeTable.readLambdaIntegration,
+            this.employeeLambda.readLambdaIntegration,
             optionsWithAuthorizer
         );
         employeeResource.addMethod(
             "PUT",
-            this.employeeTable.updateLambdaIntegration,
+            this.employeeLambda.updateLambdaIntegration,
             optionsWithAuthorizer
         );
         employeeResource.addMethod(
             "DELETE",
-            this.employeeTable.deleteLambdaIntegration,
+            this.employeeLambda.deleteLambdaIntegration,
             optionsWithAuthorizer
         );
 
@@ -227,50 +212,50 @@ export class AppStack extends cdk.Stack {
 
         officeResource.addMethod(
             "POST",
-            this.officeTable.createLambdaIntegration,
+            this.officeLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         officeResource.addMethod(
             "GET",
-            this.officeTable.readLambdaIntegration,
+            this.officeLambda.readLambdaIntegration,
             optionsWithAuthorizer
         );
         officeResource.addMethod(
             "PUT",
-            this.officeTable.updateLambdaIntegration,
+            this.officeLambda.updateLambdaIntegration,
             optionsWithAuthorizer
         );
         officeResource.addMethod(
             "DELETE",
-            this.officeTable.deleteLambdaIntegration,
+            this.officeLambda.deleteLambdaIntegration,
             optionsWithAuthorizer
         );
 
         //Department API integrations:
 
-        const departementResource = this.api.root.addResource(
+        const departmentResource = this.api.root.addResource(
             "department-api",
             optionsWithCors
         );
 
-        departementResource.addMethod(
+        departmentResource.addMethod(
             "POST",
-            this.departmentTable.createLambdaIntegration,
+            this.departmentLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
-        departementResource.addMethod(
+        departmentResource.addMethod(
             "GET",
-            this.departmentTable.readLambdaIntegration,
+            this.departmentLambda.readLambdaIntegration,
             optionsWithAuthorizer
         );
-        departementResource.addMethod(
+        departmentResource.addMethod(
             "PUT",
-            this.departmentTable.updateLambdaIntegration,
+            this.departmentLambda.updateLambdaIntegration,
             optionsWithAuthorizer
         );
-        departementResource.addMethod(
+        departmentResource.addMethod(
             "DELETE",
-            this.departmentTable.deleteLambdaIntegration,
+            this.departmentLambda.deleteLambdaIntegration,
             optionsWithAuthorizer
         );
 
@@ -279,26 +264,25 @@ export class AppStack extends cdk.Stack {
 
         roleResource.addMethod(
             "POST",
-            this.roleTable.createLambdaIntegration,
+            this.roleLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         roleResource.addMethod(
             "GET",
-            this.roleTable.readLambdaIntegration,
+            this.roleLambda.readLambdaIntegration,
             optionsWithAuthorizer
         );
         roleResource.addMethod(
             "PUT",
-            this.roleTable.updateLambdaIntegration,
+            this.roleLambda.updateLambdaIntegration,
             optionsWithAuthorizer
         );
         roleResource.addMethod(
             "DELETE",
-            this.roleTable.deleteLambdaIntegration,
+            this.roleLambda.deleteLambdaIntegration,
             optionsWithAuthorizer
         );
     }
-
     private initializeSuffix() {
         const shortStackId = cdk.Fn.select(2, cdk.Fn.split("/", this.stackId));
         const Suffix = cdk.Fn.select(4, cdk.Fn.split("-", this.stackId));
