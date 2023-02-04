@@ -1,21 +1,22 @@
 import {observer} from 'mobx-react-lite'
 import React from 'react'
 import {Grid, Segment, Table} from 'semantic-ui-react'
-import CompanyLayout from '../layout/CompanyLayout'
-import EmployeeLayout from '../layout/EmployeeLayout'
+import MainLayout from "../layout/MainLayout";
 
 
-const TimeOffView: React.FC = () => {
+const ProfileView: React.FC = () => {
     return (
-        <CompanyLayout>
+        <MainLayout>
 
             <Segment>
-                Details on the employees upcoming FTO
+                This component will hold have the functionality for the user profile
+            </Segment>
+            <Segment>
+                This component will hold have the functionality for the user profile
             </Segment>
 
-
-        </CompanyLayout>
+        </MainLayout>
     )
 }
 
-export default observer(TimeOffView)
+export default observer(ProfileView)

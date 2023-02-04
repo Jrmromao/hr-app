@@ -16,7 +16,7 @@ export default observer(function NewRoleForm() {
 
     return (
 
-        <Fragment>
+        <Segment loading={true}>
             {/* <div style={{ display: 'flex', flexDirection: 'row' }}>   </div> */}
 
             <Header icon={'briefcase'} content={'New Role'}/>
@@ -65,7 +65,7 @@ export default observer(function NewRoleForm() {
                     </Form>
                 )}
             </Formik>
-        </Fragment>);
+        </Segment>);
 
 
 });

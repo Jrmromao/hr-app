@@ -52,16 +52,25 @@
 
 
 .main-menu-sidebar {
-  background-color: #3C4B4D;
-  color: white !important;
-  height: 100vh;
-  position: sticky !important;
-  top: 0 !important;
-  padding-left: 19px !important;
+  background-color: #EBEBEB;
+  /*color: white !important;*/
+  /*height: 100vh;*/
+  /*position: sticky !important;*/
+  /*top: 0 !important;*/
+  /*padding-left: 19px !important;*/
+      box-sizing: border-box;
+    display: flex;
+    /*flex: 0 0 auto;*/
+    height: 103vh !important;
+    position: fixed;
 
 }
 
+.ui.menu.fluid, .ui.vertical.menu.fluid {
+    width: 109%!important;
+  padding-left: 15px;
 
+}
 .divider_sidebar {
   align-self: stretch;
   border-top: 1px solid hsla(0, 0%, 100%, .15);

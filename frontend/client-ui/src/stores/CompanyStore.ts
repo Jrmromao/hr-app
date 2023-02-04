@@ -16,6 +16,7 @@ import {SignUpFormData} from "../models/company";
 export default class CompanyStore {
     user: User | null = null;
     refreshTokenTimeout: any;
+    isCompanySaving: boolean = false
 
     constructor() {
         makeAutoObservable(this);
@@ -32,11 +33,16 @@ export default class CompanyStore {
 
         return;
     };
-    // create
+    // signup
     signUp = async (data: SignUpFormData) => {
         try {
+            this.isCompanySaving = true
             const result = await agent.company.create(data);
-            console.log('CompanyStore::signUp() ',result)
+            console.log('CompanyStore::signUp() ', result)
+            if (result) {
+                store.modalStore.closeModal();
+                this.isCompanySaving = false
+            }
             return result;
         } catch (error) {
             console.log(error);

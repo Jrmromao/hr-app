@@ -15,10 +15,10 @@ export default observer(function SignUpForm() {
 
     return (
 
-        <Fragment>
+        <Segment loading={companyStore.isCompanySaving}>
             {/* <div style={{ display: 'flex', flexDirection: 'row' }}>   </div> */}
 
-            <Header icon={'briefcase'} content={'New job'}/>
+            <Header icon={'building'} content={'Create an account'}/>
 
             {/* <p>Enter a name for the new role and select the legal entities for which it will be available.</p> */}
             <Formik
@@ -47,6 +47,9 @@ export default observer(function SignUpForm() {
                         <MyTextInput name="password" label='Password' placeholder='' type={'password'} required={true}/>
                         <MyTextInput name="phoneNumber" label='Phone number' placeholder='' required={true}/>
                         <MyTextInput name="numEmployees" label='Number of employees' placeholder='' type={'number'} required={true}/>
+                        <br/>
+                        <br/>
+
                         <ErrorMessage
                             name="error"
                             render={() => (
@@ -58,10 +61,9 @@ export default observer(function SignUpForm() {
                                 />
                             )}
                         />
-                        <br/>
 
                         <Segment color="teal">
-                           Company Data
+                           I accept the treatment of my data to manage my service subscription and receive related support. Privacy policy.
                         </Segment>
                         <br/>
                         <Button
@@ -75,7 +77,7 @@ export default observer(function SignUpForm() {
                         />
                     </Form>
                 )}
-            </Formik> </Fragment>);
+            </Formik> </Segment>);
 
 
 });

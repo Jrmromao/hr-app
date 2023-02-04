@@ -36,6 +36,7 @@ const CompanyLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
     return (
         <MainLayout>
             <Menu pointing secondary>
+
                 <Menu.Item name='Details' as={NavLink} to='/manage-company/' active={pathname === '/manage-company'}/>
                 <Menu.Item name='Time off' as={NavLink} to="/manage-company/time-off" />
                 <Menu.Item name='Work schedule' as={NavLink} to="/manage-company/work-schedule" />
