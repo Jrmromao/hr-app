@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom';
 import { Grid, Icon, Menu } from 'semantic-ui-react';
 import NewEmployeeForm from '../components/common/forms/NewEmployeeForm';
-import NewJobForm from '../components/common/forms/NewJobForm';
+import NewJobForm from '../components/common/forms/NewRoleForm';
 import { useStore } from '../stores/store';
 import MainLayout from './MainLayout';
 
@@ -36,6 +36,7 @@ const CompanyLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
     return (
         <MainLayout>
             <Menu pointing secondary>
+
                 <Menu.Item name='Details' as={NavLink} to='/manage-company/' active={pathname === '/manage-company'}/>
                 <Menu.Item name='Time off' as={NavLink} to="/manage-company/time-off" />
                 <Menu.Item name='Work schedule' as={NavLink} to="/manage-company/work-schedule" />

@@ -4,11 +4,11 @@ import React, { Fragment } from "react";
 import { Button, Divider, Grid, Header, Label, Menu, Progress } from "semantic-ui-react";
 
 import * as Yup from "yup";
-import MyTextInput from "./MyTextInput";
+import MyTextInput from "../FormComponents/MyTextInput";
 import { useStore } from "../../../stores/store";
 
-import MyDateInput from "./MyDateInput";
-import MySelectInput from "./MySelectInput";
+import MyDateInput from "../FormComponents/MyDateInput";
+import MySelectInput from "../FormComponents/MySelectInput";
 
 
 export default observer(function NewEmployeeForm() {

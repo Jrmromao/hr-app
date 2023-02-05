@@ -1,47 +1,41 @@
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { Fragment } from "react";
-import { Button, Grid, Header, Icon, Label, Menu, Progress, Segment } from "semantic-ui-react";
-
+import { Button, Header, Label} from "semantic-ui-react";
 import * as Yup from "yup";
-import MyTextInput from "./MyTextInput";
+import MyTextInput from "../FormComponents/MyTextInput";
 import { useStore } from "../../../stores/store";
 
-import MyDateInput from "./MyDateInput";
-import MySelectInput from "./MySelectInput";
 
-
-export default observer(function NewJobForm() {
-  const { userStore } = useStore();
+export default observer(function NewDepartmentForm() {
+  const { departmentStore } = useStore();
 
   return (
 
     <Fragment>
       {/* <div style={{ display: 'flex', flexDirection: 'row' }}>   </div> */}
 
-      <Header icon={'briefcase'}  content={'New job'}/>
-
-      <p>Enter a name for the new role and select the legal entities for which it will be available.</p>
+      <Header>
+        Add department
+      </Header>
+      <p>Fill in the employee's personal information.</p>
       <Formik
-        initialValues={{ username: "", password: "", error: null }}
+        initialValues={{ name: '', error: null }}
         onSubmit={(values, { setErrors }) =>
-          userStore
-            .login(values)
+          departmentStore.create(values)
             .catch((error) => setErrors({ error: error.message }))
         }
         validationSchema={Yup.object({
-          roleName: Yup.string().required(),
-          location: Yup.string().required(),
-
+          name: Yup.string().required(),
+          // dob: Yup.string().required(),
+          // grossSalary: Yup.string().required(),
         })}
       >
         {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
 
 
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-            <MyTextInput name="rolaName" placeholder="" label='Role name' required={true} />
-
-            <MySelectInput name="location" placeholder="Select" label='Location' options={[]} />
+            <MyTextInput name="name" placeholder="Name" label='Name' />
 
             <ErrorMessage
               name="error"
@@ -54,11 +48,6 @@ export default observer(function NewJobForm() {
                 />
               )}
             />
-            <br />
-
-            <Segment color="teal">
-              Set levels that indicate the degree of performance within a role. E.g. junior, mid and senior.
-            </Segment>
             <br />
             <Button
               loading={isSubmitting}

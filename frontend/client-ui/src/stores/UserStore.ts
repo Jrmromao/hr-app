@@ -45,17 +45,18 @@ export default class UserStore {
   };
 
   getUser = async () => {
-    console.log("Calling getUser()");
+    console.log("Calling getUser()", this.user);
 
     await Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log(user);
 
         this.user = {
           cognitoUser: user as CognitoUser,
           userName: user.getUsername(),
           token: user.getSignInUserSession()!.getIdToken().getJwtToken(),
         };
+        console.log(this.user);
+        
       })
       .catch((error) => console.log(error));
   };

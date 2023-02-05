@@ -1,9 +1,12 @@
+import { uuid } from "aws-sdk/clients/customerprofiles";
+
 export interface EmployeeMenuItem {
   label: string;
   formModal: JSX.Element;
 }
 
 export interface EmployeeFormData {
+  employeeId?: uuid;
   firstName: string;
   lastName: string;
   grossSalary: number;

@@ -4,14 +4,14 @@ import React, { Fragment } from "react";
 import { Button, Grid, Header, Icon, Label, Menu, Progress, Segment } from "semantic-ui-react";
 
 import * as Yup from "yup";
-import MyTextInput from "./MyTextInput";
+import MyTextInput from "../FormComponents/MyTextInput";
 import { useStore } from "../../../stores/store";
 
-import MyDateInput from "./MyDateInput";
-import MySelectInput from "./MySelectInput";
+import MyDateInput from "../FormComponents/MyDateInput";
+import MySelectInput from "../FormComponents/MySelectInput";
 
 
-export default observer(function NewLocationForm() {
+export default observer(function NewOfficeForm() {
   const { userStore } = useStore();
 
   return (
@@ -21,7 +21,7 @@ export default observer(function NewLocationForm() {
 
       <Header icon={'briefcase'}  content={'New job'}/>
 
-      <p>Enter a name for the new role and select the legal entities for which it will be available.</p>
+      {/* <p>Enter a name for the new role and select the legal entities for which it will be available.</p> */}
       <Formik
         initialValues={{ username: "", password: "", error: null }}
         onSubmit={(values, { setErrors }) =>
