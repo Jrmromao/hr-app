@@ -4,34 +4,47 @@ import uuid
 import boto3
 from datetime import datetime
 
-
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('Company')
+table = dynamodb.Table('Comp')
 
 
 def main(event, _):
     now = datetime.now()
-    myuuid = uuid.uuid4()
+    companyId = uuid.uuid4()
+    emp_id = uuid.uuid4()
 
-    print('Your UUID is: ' + str(myuuid))
-    company = json.loads(event['body'])
-    table.put_item(
-        Item={
-            'companyId': uuid.uuid4(),
-            'datetime_registered': now,
-            'companyName': company.get('companyName'),
-            'phoneNumber': company.get('phoneNumber'),
-            'email': company.get('email'),
-            'NumOfEmployees': company.get('numEmployees'),
-        }
-    )
+    # the purpose of this lambda is to create new companies
 
+    try:
+
+        # companyData = json.loads(event['body'])
+        # companyData.get('companyName')
+        # companyData.get('numEmployees')
+        # the first employee details:
+        # first_name, last_name, email_address, phone_number - these details will be sent to the lambda for employee creation via SQS message
+        env_var = os.environ.get('EMPLOYEE_QUEUE_NAME')
+        result = table.put_item(
+            Item={
+                'PK': f'COMP#{companyId}',
+                'SK': f'#METADATA#{companyId}',
+                'signup_date': str(now),
+                'company_name': 'Liberty Mutual',
+                'num_employees': 100
+            }
+        )
+        if result['ResponseMetadata'].get('HTTPStatusCode') == 200:
+            # now, create the first employee
+            # create an SQS message and sent the companyId and the employee details to the lambda to create the result
+            pass
+
+    except dynamodb.exceptions.ConditionalCheckFailedException:
+        print("The email already exists in the table")
     return {
         'statusCode': 200,
         'headers': {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'POST'
         },
-        'body': json.dumps('Hello from  ' + event['resource'] + ' create  Lambda!')
+        'body': json.dumps('Hello from create  Lambda!')
     }
