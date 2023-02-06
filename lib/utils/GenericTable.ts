@@ -1,5 +1,11 @@
 import {Stack} from "aws-cdk-lib";
-import {AttributeType, BillingMode, Table} from "aws-cdk-lib/aws-dynamodb";
+import {
+    AttributeType,
+    BillingMode,
+    StreamViewType,
+    Table,
+} from "aws-cdk-lib/aws-dynamodb";
+import {config} from "../config/configuration";
 
 export interface TableProps {
     tableName: string;
@@ -21,24 +27,43 @@ export class GenericTable {
 
     private initialize() {
         this.createTable();
-        this.addSecondaryIndexes();
     }
 
     private createTable() {
-        this.table = new Table(this.stack, this.props.tableName, {
-            partitionKey: {
-                name: this.props.primaryKey,
-                type: AttributeType.STRING,
-            },
 
-            tableName: this.props.tableName,
+        this.table = new Table(this.stack, `${config.environmentKey}-companies`, {
+            tableName: config.dynamoDbTableName,
+            partitionKey: {name: "PK", type: AttributeType.STRING},
+            sortKey: {name: "SK", type: AttributeType.STRING},
+            billingMode: BillingMode.PAY_PER_REQUEST,
         });
 
+        this.table.addGlobalSecondaryIndex({
+            indexName: "CompanyIndex",
+            partitionKey: {name: "CompanyId", type: AttributeType.STRING},
+            sortKey: {name: "CompanyName", type: AttributeType.STRING},
+        });
 
-        // this.table.addLocalSecondaryIndex({
-        //     indexName: 'statusIndex',
-        //     sortKey: {name: 'status', type: AttributeType.STRING},
-        // });
+        this.table.addGlobalSecondaryIndex({
+            indexName: "DepartmentIndex",
+            partitionKey: {
+                name: "DepartmentId",
+                type: AttributeType.STRING,
+            },
+            sortKey: {name: "DepartmentName", type: AttributeType.STRING},
+        });
+
+        this.table.addGlobalSecondaryIndex({
+            indexName: "OfficeIndex",
+            partitionKey: {name: "OfficeId", type: AttributeType.STRING},
+            sortKey: {name: "OfficeName", type: AttributeType.STRING},
+        });
+
+        this.table.addGlobalSecondaryIndex({
+            indexName: "EmployeeIndex",
+            partitionKey: {name: "EmployeeId", type: AttributeType.STRING},
+            sortKey: {name: "EmployeeName", type: AttributeType.STRING},
+        });
     }
 
     private addSecondaryIndexes() {

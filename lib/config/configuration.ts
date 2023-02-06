@@ -1,5 +1,6 @@
 export const config = {
-        environment: 'development',
+        environmentKey: 'development',
         uiBucketName: 'app.jrmromao.com',
-        dynamoDbTableName: "Company",
+        dynamoDbTableName: "Comp",
+
     }

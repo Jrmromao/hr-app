@@ -6,35 +6,27 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import {config} from "../config/configuration";
 import {createSqsEventRole} from "./roleCreator";
 import {GenericQueue} from "./GenericQueue";
-import {SqsEventSource} from "@aws-cdk/aws-lambda-event-sources";
-import {IQueue} from "aws-cdk-lib/aws-sqs";
+import {IQueue, Queue, QueueEncryption} from "aws-cdk-lib/aws-sqs";
+import {PolicyStatement, Role, ServicePrincipal} from "aws-cdk-lib/aws-iam";
+import {SqsEventSource} from "aws-cdk-lib/aws-lambda-event-sources";
 
 
-export interface TableProps {
+export interface LambdaProps {
     lambdaName: string;
     servicePath: string;
     createLambda?: string;
-    readLambda?: string;
-    updateLambda?: string;
-    deleteLambda?: string;
     layerVersion: ILayerVersion;
-    queueName?: string;
+    employeeQueue: IQueue;
 
 }
 
-export class GenericLambda {
+export class EmployeeLambda {
     private readonly stack: Stack;
-    private props: TableProps;
+    private props: LambdaProps;
     private createLambda: Lambda | undefined;
-    private readLambda: Lambda | undefined;
-    private updateLambda: Lambda | undefined;
-    private deleteLambda: Lambda | undefined;
     public createLambdaIntegration: LambdaIntegration;
-    public readLambdaIntegration: LambdaIntegration;
-    public updateLambdaIntegration: LambdaIntegration;
-    public deleteLambdaIntegration: LambdaIntegration;
-
-    public constructor(stack: Stack, props: TableProps) {
+   private queue: IQueue;
+    public constructor(stack: Stack, props: LambdaProps) {
         this.stack = stack;
         this.props = props;
         this.initialize();
@@ -45,21 +37,9 @@ export class GenericLambda {
     }
 
     private createLambdas() {
-        if (this.props.createLambda && this.props.servicePath && this.props.lambdaName != 'Company' && this.props.lambdaName != 'Employee') {
+        if (this.props.createLambda && this.props.servicePath && this.props.lambdaName != 'Company') {
             this.createLambda = this.createSingleLambda(this.props.servicePath, this.props.createLambda, 'PutItem');
             this.createLambdaIntegration = new LambdaIntegration(this.createLambda);
-        }
-        if (this.props.readLambda && this.props.servicePath) {
-            this.readLambda = this.createSingleLambda(this.props.servicePath, this.props.readLambda, 'Query');
-            this.readLambdaIntegration = new LambdaIntegration(this.readLambda);
-        }
-        if (this.props.updateLambda && this.props.servicePath) {
-            this.updateLambda = this.createSingleLambda(this.props.servicePath, this.props.updateLambda, 'UpdateItem');
-            this.updateLambdaIntegration = new LambdaIntegration(this.updateLambda);
-        }
-        if (this.props.deleteLambda && this.props.servicePath) {
-            this.deleteLambda = this.createSingleLambda(this.props.servicePath, this.props.deleteLambda, 'DeleteItem');
-            this.deleteLambdaIntegration = new LambdaIntegration(this.deleteLambda);
         }
     }
 
@@ -67,6 +47,23 @@ export class GenericLambda {
 
         const lambdaId = `${lambdaName}${this.props.lambdaName}`;
 
+        const role = new Role(this.stack, "ReadMessage", {
+            roleName: "ReadEventRole",
+            assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
+        });
+
+        role.addToPolicy(
+            new PolicyStatement({
+                resources: ["*"],
+                actions: [
+                    "sqs:*",
+                    "kms:Decrypt",
+                    "cloudwatch:*",
+                    "logs:*",
+                    "iam:*",
+                ],
+            })
+        );
         const lambdaFunc = new Lambda(this.stack, lambdaId, {
             functionName: `${config.environmentKey}-${lambdaId}-lambda`,
             runtime: Runtime.PYTHON_3_9,
@@ -77,16 +74,20 @@ export class GenericLambda {
             layers: [this.props.layerVersion],
             environment: {
                 TABLE_NAME: config.dynamoDbTableName,
-                EMPLOYEE_QUEUE_NAME: this.props.queueName || ''
+                EMPLOYEE_QUEUE_NAME: this.props.employeeQueue.queueName
             },
         });
 
+        const eventSource = new SqsEventSource(this.props.employeeQueue, {
+            batchSize: 1,
+        });
+
+         lambdaFunc.addEventSource(eventSource);
 
         const dynamoDbPolicy = new iam.PolicyStatement({
             actions: [`dynamodb:${action}`],
             resources: [`arn:aws:dynamodb:us-east-1:750245270653:table/${config.dynamoDbTableName}`],
         });
-
 
         lambdaFunc.role?.attachInlinePolicy(
             new iam.Policy(this.stack, `LambdaDynamoDBPolicy-${action}${this.props.lambdaName}`, {

@@ -16,8 +16,12 @@ import {AuthorizerWrapper} from "./auth/AuthorizerWrapper";
 import {config} from "./config/configuration";
 import {GenericTable} from "./utils/GenericTable";
 import {Policies} from "./Policies";
-import {Code, ILayerVersion, LayerVersion, Runtime} from "aws-cdk-lib/aws-lambda";
+import {Code, LayerVersion, Runtime} from "aws-cdk-lib/aws-lambda";
 import {GenericLambda} from "./utils/GenericLambda";
+import {GenericQueue} from "./utils/GenericQueue";
+import {CompanyLambda} from "./utils/CompanyLambda";
+import {EmployeeLambda} from "./utils/EmployeeLambda";
+
 
 export class AppStack extends cdk.Stack {
     private suffix: string;
@@ -27,7 +31,7 @@ export class AppStack extends cdk.Stack {
 
     private api = new RestApi(this, "HRAppAPI");
     private authorizer: AuthorizerWrapper;
-    private policies: Policies;
+    private readonly policies: Policies;
 
 
     private layerLibs = new LayerVersion(this, `third-party-libs`, {
@@ -40,52 +44,72 @@ export class AppStack extends cdk.Stack {
         layerVersionName: `third-party-libs`
     });
 
-    private companyLambda = new GenericLambda(this, {
-        lambdaName: "Company",
-        servicePath: "CompanyLambdas",
+    private employeeQueue = new GenericQueue(this, {
+        id: "employeeData"
+    })
+
+    private createCompanyLambda = new CompanyLambda(this, {
         createLambda: "Create",
-        readLambda: "Read",
-        updateLambda: "Update",
-        deleteLambda: "Delete",
+        employeeQueue: this.employeeQueue.getQueue(),
+        lambdaName: "Company",
         layerVersion: this.layerLibs,
+        servicePath: "CompanyLambdas"
     });
 
-    private employeeLambda = new GenericLambda(this, {
-        lambdaName: "Employee",
-        servicePath: "EmployeeLambdas",
+    private companyLambda = new GenericLambda(this, {
         createLambda: "Create",
-        readLambda: "Read",
-        updateLambda: "Update",
         deleteLambda: "Delete",
+        lambdaName: "Company",
         layerVersion: this.layerLibs,
+        readLambda: "Read",
+        servicePath: "CompanyLambdas",
+        updateLambda: "Update",
+    });
+
+    private createEmployeeLambda = new EmployeeLambda(this, {
+        createLambda: "Create",
+        lambdaName: "Employee",
+        layerVersion: this.layerLibs,
+        employeeQueue: this.employeeQueue.getQueue(),
+        servicePath: "EmployeeLambdas",
+    })
+
+    private employeeLambda = new GenericLambda(this, {
+        createLambda: "Create",
+        deleteLambda: "Delete",
+        lambdaName: "Employee",
+        layerVersion: this.layerLibs,
+        readLambda: "Read",
+        servicePath: "EmployeeLambdas",
+        updateLambda: "Update",
     })
 
     private officeLambda = new GenericLambda(this, {
-        lambdaName: "Office",
         createLambda: "Create",
-        readLambda: "Read",
-        updateLambda: "Update",
         deleteLambda: "Delete",
-        servicePath: "OfficeLambdas",
+        lambdaName: "Office",
         layerVersion: this.layerLibs,
+        readLambda: "Read",
+        servicePath: "OfficeLambdas",
+        updateLambda: "Update",
     });
     private departmentLambda = new GenericLambda(this, {
-        lambdaName: "Department",
         createLambda: "Create",
-        readLambda: "Read",
-        updateLambda: "Update",
         deleteLambda: "Delete",
-        servicePath: "DepartmentLambdas",
+        lambdaName: "Department",
         layerVersion: this.layerLibs,
+        readLambda: "Read",
+        servicePath: "DepartmentLambdas",
+        updateLambda: "Update",
     });
     private roleLambda = new GenericLambda(this, {
-        lambdaName: "Role",
         createLambda: "Create",
-        readLambda: "Read",
-        updateLambda: "Update",
         deleteLambda: "Delete",
-        servicePath: "RoleLambdas",
+        lambdaName: "Role",
         layerVersion: this.layerLibs,
+        readLambda: "Read",
+        servicePath: "RoleLambdas",
+        updateLambda: "Update",
     });
 
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -93,16 +117,16 @@ export class AppStack extends cdk.Stack {
         this.initializeSuffix();
         this.initializeDocumentBucket();
         this.deploymentBucket = new Bucket(this, "hr-app-client-ui", {
+            autoDeleteObjects: true,
             bucketName: config.uiBucketName,
             publicReadAccess: true,
-            websiteIndexDocument: "index.html",
-            websiteErrorDocument: "index.html",
             removalPolicy: cdk.RemovalPolicy.DESTROY,
-            autoDeleteObjects: true,
+            websiteErrorDocument: "index.html",
+            websiteIndexDocument: "index.html",
         });
 
         new GenericTable(this, {
-            tableName: "Company",
+            tableName: "Companies",
             primaryKey: "companyId",
             secondaryIndexes: ["companyName"],
         });
@@ -157,7 +181,7 @@ export class AppStack extends cdk.Stack {
 
         companyResource.addMethod(
             "POST",
-            this.companyLambda.createLambdaIntegration,
+            this.createCompanyLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         companyResource.addMethod(
@@ -182,9 +206,9 @@ export class AppStack extends cdk.Stack {
             "employee-api",
             optionsWithCors
         );
-        employeeResource.addMethod(
+        employeeResource.addMethod( // create employee
             "POST",
-            this.employeeLambda.createLambdaIntegration,
+            this.createEmployeeLambda.createLambdaIntegration,
             optionsWithAuthorizer
         );
         employeeResource.addMethod(
@@ -283,6 +307,7 @@ export class AppStack extends cdk.Stack {
             optionsWithAuthorizer
         );
     }
+
     private initializeSuffix() {
         const shortStackId = cdk.Fn.select(2, cdk.Fn.split("/", this.stackId));
         const Suffix = cdk.Fn.select(4, cdk.Fn.split("-", this.stackId));
@@ -292,7 +317,7 @@ export class AppStack extends cdk.Stack {
     private initializeDocumentBucket() {
         this.documentBucket = new Bucket(
             this,
-            `document-bucket-${config.environment}`,
+            `document-bucket-${config.environmentKey}`,
             {
                 bucketName: `document-bucket-${this.suffix}`,
                 cors: [
