@@ -1,33 +1,34 @@
-import { uuid } from "aws-sdk/clients/customerprofiles";
+import {uuid} from "aws-sdk/clients/customerprofiles";
 
 export interface EmployeeMenuItem {
-  label: string;
-  formModal: JSX.Element;
+    label: string;
+    formModal: JSX.Element;
 }
 
 export interface EmployeeFormData {
-  employeeId?: uuid;
-  firstName: string;
-  lastName: string;
-  grossSalary: number;
-  email: string;
-  dateOfBirth?: Date;
-  department?: Department;
-  team?: string;
-  gender?: string;
-  office?: string;
-  role?: Role;
-  employeeNumb: string;
-  address?: Address
+    employee_id?: uuid;
+    company_id?: uuid;
+    first_name: string;
+    last_name: string;
+    gross_salary?: number;
+    email: string;
+    date_of_birth?: Date;
+    department?: Department;
+    team?: string;
+    gender?: string;
+    office?: string;
+    role?: Role;
+    staff_number: string;
+    address?: Address
 }
 
 export interface Department {
-  name: string;
-  location: string;
-  workingHours: number;
+    name: string;
+    location: string;
+    workingHours: number;
 }
 
-export interface Address{
+export interface Address {
     line1: string;
     line2: string
     city: string
@@ -36,7 +37,7 @@ export interface Address{
 }
 
 
-export interface Role{
-  name: string;
-  level: string
+export interface Role {
+    name: string;
+    level: string
 }

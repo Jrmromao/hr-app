@@ -38,7 +38,7 @@ const ManageEmployeeView: React.FC = () => {
                 <Grid.Column width={3}>
                     <Segment color='blue'>
 
-                        <Button icon='plus' onClick={() => modalStore.openModal(<SignUpForm/>)}/>
+                        <Button icon='plus' onClick={() => modalStore.openModal(<NewEmployeeForm/>)}/>
                     </Segment>
                 </Grid.Column>
             </Grid.Row>
