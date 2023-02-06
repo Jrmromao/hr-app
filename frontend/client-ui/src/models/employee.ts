@@ -11,7 +11,7 @@ export interface EmployeeFormData {
     first_name: string;
     last_name: string;
     gross_salary?: number;
-    email: string;
+    email_address: string;
     date_of_birth?: Date;
     department?: Department;
     team?: string;

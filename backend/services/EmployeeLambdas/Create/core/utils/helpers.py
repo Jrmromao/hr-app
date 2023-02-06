@@ -1,4 +1,4 @@
 def event_parser(event: dict):
-    if event['Records'][0]['eventSource'] == 'aws:sqs':
-        return event['Records'][0]['body']
-    return event['body']
+    if 'body' in event.keys():
+        return event['body']
+    return event['Records'][0]['body']

@@ -28,7 +28,7 @@ export default observer(function NewEmployeeForm() {
                     last_name: '',
                     gross_salary: 0,
                     staff_number: '',
-                    email: '',
+                    email_address: '',
                     company_id: 'c2a4b1a1-4441-41c6-bcb4-8fc8485f71e1',
                     error: null
                 }}
@@ -57,7 +57,7 @@ export default observer(function NewEmployeeForm() {
                             <div style={{marginLeft: 3}}>
                                 <MyTextInput name="last_name" placeholder="Last Name" label='Last Name'/></div>
                         </div>
-                        <MyTextInput name="email" placeholder="Email" label='Email' type='email'/>
+                        <MyTextInput name="email_address" placeholder="Email" label='Email' type='email'/>
 
                         {/* <MySelectInput name="role" placeholder="Select" label='Role' options={[]} /> */}
                         {/* <MyTextInput name="grossSalary" placeholder="Salary" label='Gross Salary' type='number' /> */}
