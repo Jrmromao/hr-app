@@ -8,31 +8,23 @@ import {createSqsEventRole} from "./roleCreator";
 import {GenericQueue} from "./GenericQueue";
 import {SqsEventSource} from "@aws-cdk/aws-lambda-event-sources";
 import {IQueue} from "aws-cdk-lib/aws-sqs";
+import {SqsDestination} from "aws-cdk-lib/aws-lambda-destinations";
+import {PolicyStatement, Role, ServicePrincipal} from "aws-cdk-lib/aws-iam";
 
 
 export interface TableProps {
     lambdaName: string;
     servicePath: string;
     createLambda?: string;
-    readLambda?: string;
-    updateLambda?: string;
-    deleteLambda?: string;
     layerVersion: ILayerVersion;
-    queueName?: string;
-
+    employeeQueue: IQueue;
 }
 
-export class GenericLambda {
+export class CompanyLambda {
     private readonly stack: Stack;
     private props: TableProps;
     private createLambda: Lambda | undefined;
-    private readLambda: Lambda | undefined;
-    private updateLambda: Lambda | undefined;
-    private deleteLambda: Lambda | undefined;
     public createLambdaIntegration: LambdaIntegration;
-    public readLambdaIntegration: LambdaIntegration;
-    public updateLambdaIntegration: LambdaIntegration;
-    public deleteLambdaIntegration: LambdaIntegration;
 
     public constructor(stack: Stack, props: TableProps) {
         this.stack = stack;
@@ -45,21 +37,9 @@ export class GenericLambda {
     }
 
     private createLambdas() {
-        if (this.props.createLambda && this.props.servicePath && this.props.lambdaName != 'Company' && this.props.lambdaName != 'Employee') {
+        if (this.props.createLambda && this.props.servicePath) {
             this.createLambda = this.createSingleLambda(this.props.servicePath, this.props.createLambda, 'PutItem');
             this.createLambdaIntegration = new LambdaIntegration(this.createLambda);
-        }
-        if (this.props.readLambda && this.props.servicePath) {
-            this.readLambda = this.createSingleLambda(this.props.servicePath, this.props.readLambda, 'Query');
-            this.readLambdaIntegration = new LambdaIntegration(this.readLambda);
-        }
-        if (this.props.updateLambda && this.props.servicePath) {
-            this.updateLambda = this.createSingleLambda(this.props.servicePath, this.props.updateLambda, 'UpdateItem');
-            this.updateLambdaIntegration = new LambdaIntegration(this.updateLambda);
-        }
-        if (this.props.deleteLambda && this.props.servicePath) {
-            this.deleteLambda = this.createSingleLambda(this.props.servicePath, this.props.deleteLambda, 'DeleteItem');
-            this.deleteLambdaIntegration = new LambdaIntegration(this.deleteLambda);
         }
     }
 
@@ -67,20 +47,36 @@ export class GenericLambda {
 
         const lambdaId = `${lambdaName}${this.props.lambdaName}`;
 
+
+        const role = new Role(this.stack, "SendMessage", {
+            roleName: "SendEventRole",
+            assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
+        });
+
+        role.addToPolicy(
+            new PolicyStatement({
+                resources: ["*"],
+                actions: [
+                    "sqs:*",
+                    "kms:*",
+                ],
+            })
+        );
         const lambdaFunc = new Lambda(this.stack, lambdaId, {
             functionName: `${config.environmentKey}-${lambdaId}-lambda`,
             runtime: Runtime.PYTHON_3_9,
             handler: "handler.main",
+            role: role,
             code: Code.fromAsset(
                 join(__dirname, "..", "..", "backend", "services", servicePath, lambdaName, "core")
             ),
             layers: [this.props.layerVersion],
             environment: {
                 TABLE_NAME: config.dynamoDbTableName,
-                EMPLOYEE_QUEUE_NAME: this.props.queueName || ''
+                EMPLOYEE_QUEUE_NAME: this.props.employeeQueue.queueName
             },
+            onSuccess: new SqsDestination(this.props.employeeQueue),
         });
-
 
         const dynamoDbPolicy = new iam.PolicyStatement({
             actions: [`dynamodb:${action}`],

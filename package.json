@@ -25,9 +25,11 @@
   },
   "dependencies": {
     "@aws-amplify/auth": "^3.4.32",
+    "@aws-cdk/aws-lambda-event-sources": "^1.191.0",
     "aws-amplify": "^4.0.0",
     "aws-cdk-lib": "2.40.0",
-    "aws-lambda": "^1.0.7",
+
+
     "aws-sdk": "^2.1248.0",
     "constructs": "^10.0.0",
     "mobx-react": "^7.5.3"
