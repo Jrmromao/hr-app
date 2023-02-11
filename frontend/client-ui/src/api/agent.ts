@@ -1,7 +1,7 @@
 import {uuid} from "aws-sdk/clients/customerprofiles";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {DepartmentFormData} from "../models/department";
-import {EmployeeFormData} from "../models/employee";
+import {Employee, EmployeeFormData} from "../models/employee";
 import {OfficeFormData} from "../models/office";
 import {RoleFormData} from "../models/role";
 import {store} from "../stores/store";
@@ -28,7 +28,7 @@ const requests = {
 };
 
 const employee = {
-    list: () => requests.get<[]>("/employee-api"),
+    list: (companyId: string) => requests.get<Employee[]>(`/employee-api/?companyId=${companyId}`),
     getById: (id: uuid) => requests.get<any>(`/employee-api/${id}`),
     create: (data: EmployeeFormData) => requests.post<any>("/employee-api", data),
     update: () => requests.put<any>("/employee-api", {}),

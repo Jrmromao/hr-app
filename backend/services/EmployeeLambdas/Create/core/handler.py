@@ -33,8 +33,8 @@ def main(event, _):
                 'address': None,
             },
         )
-    except:
-        print("The email already exists in the table")
+    except ValueError as e:
+        print("The email already exists in the table", str(e))
     return {
         'statusCode': 200,
         'headers': {

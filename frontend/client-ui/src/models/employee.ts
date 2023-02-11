@@ -5,6 +5,22 @@ export interface EmployeeMenuItem {
     formModal: JSX.Element;
 }
 
+
+
+export interface Employee{
+    employee_id?: uuid;
+    company_id?: uuid;
+    date_joined: string
+    social_security: string
+    staff_number: string
+    first_name: string;
+    last_name: string;
+    email: string;
+    date_of_birth?: Date;
+
+}
+
+
 export interface EmployeeFormData {
     employee_id?: uuid;
     company_id?: uuid;

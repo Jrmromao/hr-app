@@ -9,42 +9,41 @@ import {Auth} from "aws-amplify";
 import AWS from "aws-sdk";
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import {CognitoUser} from "@aws-amplify/auth";
-import {EmployeeFormData} from "../models/employee";
+import {Employee, EmployeeFormData} from "../models/employee";
 
 export default class EmployeeStore {
     user: User | null = null;
     refreshTokenTimeout: any;
+    employeeList: Employee[] = []
+
+    empLoadingFlag: boolean = false
 
     constructor() {
         makeAutoObservable(this);
-        // const navigate = useNavigate();
-        // navigate('login')
     }
 
     // get
-    list = async () => {
-        try {
-            const result = await agent.employee.list();
-            return result;
-        } catch (error) {
-            console.log(error);
-        }
-
-        return;
+    list = async (companyId: string) => {
+        await agent.employee.list(companyId)
+            .then(result => this.employeeList = result as Employee[])
+            .catch(error => console.error(error))
     };
     // create
     create = async (data: EmployeeFormData) => {
         try {
 
-            console.log(data)
+
             const result = await agent.employee.create(data);
 
-            if (result)
+            if (result) {
                 store.modalStore.closeModal();
+                await this.list(data.company_id as string)
+
+            }
 
             return result;
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
     };
     // update
