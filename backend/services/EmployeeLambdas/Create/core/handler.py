@@ -4,34 +4,37 @@ import uuid
 import boto3
 from datetime import datetime
 
+from utils.helpers import event_parser
+
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('Comp')
+table = dynamodb.Table(os.environ.get('TABLE_NAME'))
 
 
+# the purpose of this lambda is to create new employees
+# the id for an employee PK as: COM#{companyId} and SK EMP#{employeeID}
 def main(event, _):
     now = datetime.now()
-    companyId = uuid.uuid4()
+
     emp_id = uuid.uuid4()
 
-    # the purpose of this lambda is to create new employees
-    # the id for an employee PK as: COM#{companyId} and SK EMP#{employeeID}
     try:
+        employee_data = event_parser(event)
 
-        # company = json.loads(event['body'])
         table.put_item(
             Item={
-                'PK': f'COMP#df72005a-73ea-4432-8117-fe2d3142df33',
+                'PK': f'COMP#{employee_data.get("company_id", None)}',
                 'SK': f'#EMP{emp_id}',
-                'first_name': 'Joao',
-                'last_name': 'Romao',
+                'staff_number': employee_data.get('staff_number', None),
+                'first_name': employee_data.get('first_name', None),
+                'last_name': employee_data.get('last_name', None),
                 'date_joined': str(now),
-                'email': 'test@mail.com',
-                'social_security': '1230986J',
-                'address': '104 Rua da Junta, Galveias, Portugal',
+                'email': employee_data.get('email_address', None),
+                'social_security': None,
+                'address': None,
             },
         )
-    except dynamodb.exceptions.ConditionalCheckFailedException:
-        print("The email already exists in the table")
+    except ValueError as e:
+        print("The email already exists in the table", str(e))
     return {
         'statusCode': 200,
         'headers': {

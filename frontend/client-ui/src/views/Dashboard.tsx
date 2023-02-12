@@ -23,11 +23,11 @@ export default observer(function Dashboard() {
 
 
         employeeStore.create({
-            firstName: 'Joao',
-            lastName: 'Romao',
-            grossSalary: 100000,
-            email: 'joao@gmail.com',
-            employeeNumb: '123L'
+            first_name: 'Joao',
+            last_name: 'Romao',
+            gross_salary: 100000,
+            email_address: 'joao@gmail.com',
+            staff_number: '123L'
 
         }).then(res => setCreate(res))
 

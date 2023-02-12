@@ -16,3 +16,7 @@ api-requests.http
 .vscode/
 
 .idea/
+/backend/services/CompanyLambdas/Create/core/local_run.py
+
+**/local_run.py
+*.pyc

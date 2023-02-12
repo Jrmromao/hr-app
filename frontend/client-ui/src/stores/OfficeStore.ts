@@ -24,7 +24,7 @@ export default class OfficeStore {
   // get
   list = async () => {
     try {
-      const result = await agent.employee.list();
+      const result = await agent.employee.list('');
       return result;
     } catch (error) {
       console.log(error);

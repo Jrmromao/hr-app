@@ -58,7 +58,9 @@ export class CompanyLambda {
                 resources: ["*"],
                 actions: [
                     "sqs:*",
-                    "kms:*",
+                    "kms:Decrypt",
+                    "cloudwatch:*",
+                    "logs:*",
                 ],
             })
         );

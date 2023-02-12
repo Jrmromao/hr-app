@@ -38,11 +38,11 @@ export class GenericTable {
             billingMode: BillingMode.PAY_PER_REQUEST,
         });
 
-        this.table.addGlobalSecondaryIndex({
-            indexName: "CompanyIndex",
-            partitionKey: {name: "CompanyId", type: AttributeType.STRING},
-            sortKey: {name: "CompanyName", type: AttributeType.STRING},
-        });
+        // this.table.addGlobalSecondaryIndex({
+        //     indexName: "CompanyIndex",
+        //     partitionKey: {name: "CompanyId", type: AttributeType.STRING},
+        //     sortKey: {name: "CompanyName", type: AttributeType.STRING},
+        // });
 
         this.table.addGlobalSecondaryIndex({
             indexName: "DepartmentIndex",
