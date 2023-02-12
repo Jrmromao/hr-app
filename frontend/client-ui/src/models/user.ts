@@ -1,13 +1,23 @@
+import { CognitoUser } from "@aws-amplify/auth";
+
 export interface User {
-    username: string;
-    displayName: string;
+    userName: string;
+    cognitoUser: CognitoUser;
     token: string;
     image?: string;
 }
 
 export interface UserFormValues {
-    email: string;
+    email?: string;
     password: string;
     displayName?: string;
-    username?: string;
+    username: string;
 }
+
+
+export interface UserAttributes{
+    Name: string,
+    Value: string
+}
+
+

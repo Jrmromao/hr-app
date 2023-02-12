@@ -6,7 +6,7 @@ import { config } from "../lib/config/configuration";
 
 const app = new cdk.App();
 new AppStack(app, `HrAppStack`, {
-  description: `${config.environment} environment for the HR App`
+  description: `${config.environmentKey} environment for the HR App`
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

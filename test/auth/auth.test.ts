@@ -1,6 +1,6 @@
 import * as AWS from "aws-sdk";
-import { AuthService } from "./AuthService";
-import { config } from "./config";
+import { AuthService } from "../../frontend/client-ui/src/services/AuthService";
+import { config } from "../../frontend/client-ui/src/services/config";
 
 AWS.config.region = config.REGION;
 
@@ -23,8 +23,8 @@ async function callStuff() {
     config.TEST_USER_NAME,
     config.TEST_USER_PASSWORD
   );
-  await authService.getAWSTemporaryCreds(user);
-  const someCreds = AWS.config.credentials;
+  // await authService.getAWSTemporaryCreds(user);
+  // const someCreds = AWS.config.credentials;
  
  
 }

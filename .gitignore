@@ -1,12 +1,22 @@
 *.js
 !jest.config.js
 *.d.ts
-node_modules
+**/node_modules
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
 
+layer/*
+
 frontend/client-ui/build/
 
 api-requests.http
+
+.vscode/
+
+.idea/
+/backend/services/CompanyLambdas/Create/core/local_run.py
+
+**/local_run.py
+*.pyc
