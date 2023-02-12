@@ -1,12 +1,10 @@
-
-
-import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom';
-import { Grid, Menu } from 'semantic-ui-react';
+import {observer} from 'mobx-react-lite';
+import React, {useEffect, useState} from 'react'
+import {NavLink, useLocation} from 'react-router-dom';
+import {Button, Grid, Header, Icon, Menu, Segment, Sidebar as Drawer} from 'semantic-ui-react';
 import NewEmployeeForm from '../components/common/forms/NewEmployeeForm';
-import NewJobForm from '../components/common/forms/NewRoleForm';
-import { useStore } from '../stores/store';
+import '../styles/sideDrawer.css'
+import {useStore} from '../stores/store';
 import MainLayout from './MainLayout';
 
 
@@ -17,9 +15,9 @@ interface IProps {
 }
 
 
-const EmployeeLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
+const EmployeeLayout: React.FC<IProps> = ({children, active, itemLabel}) => {
 
-    const { modalStore, layoutStore } = useStore();
+    const {modalStore, layoutStore, sideDrawerStore} = useStore();
     const [menuItemLabel, setMenuItemLabel] = useState('')
     const [formModal, setFormModal] = useState<JSX.Element>(<NewEmployeeForm/>)
     const location = useLocation();
@@ -36,21 +34,33 @@ const EmployeeLayout: React.FC<IProps> = ({ children, active, itemLabel }) => {
     return (
         <MainLayout>
             <Menu pointing secondary>
-                <Menu.Item name='Emplyees' active={active === 'employee'} as={NavLink} to="/manage-employees" />
-                <Menu.Item name='Jobs' active={active === 'jobs'} as={NavLink} to="/manage-jobs" />
-                {/* <Menu.Menu position='right'>
-                    <Menu.Item name={layoutStore.employeeMenuItem?.label} onClick={(env) => modalStore.openModal(layoutStore.employeeMenuItem?.formModal || <NewEmployeeForm />)
-                    } />
-                </Menu.Menu> */}
+                <Menu.Item name='Employees' active={active === 'employee'} as={NavLink} to="/manage-employees"/>
+                <Menu.Item name='Jobs' active={active === 'jobs'} as={NavLink} to="/manage-jobs"/>
             </Menu>
-            <br />
-            <Grid divided>
-                <Grid.Row>
-                    <Grid.Column>
-                        {children}
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+            <br/>
+            <Drawer.Pushable as={Segment} style={{overflow: 'hidden'}}>
+
+                <Drawer
+                    className={'sideDrawer-children'}
+                    style={{overflow: 'hidden', backgroundColor: '#fff'}}
+                    animation='overlay'
+                    direction='right'
+                    icon='labeled'
+                    inverted
+                    vertical
+                    visible={sideDrawerStore.sidebarOpen}
+                    width='very wide'
+                >
+
+                    <div style={{display: 'flex', flexDirection: 'column-reverse', alignItems: 'flex-end'}}>
+                        <Icon name='close' size={'large'}  link onClick={()=> sideDrawerStore.close()}/>
+                    </div>
+                    <NewEmployeeForm/>
+                </Drawer>
+                <Drawer.Pusher>
+                    {children}
+                </Drawer.Pusher>
+            </Drawer.Pushable>
         </MainLayout>
     );
 };

@@ -17,13 +17,16 @@ export interface Employee{
     last_name: string;
     email: string;
     date_of_birth?: Date;
-
+    job_title: string
+    contract_type: string
+    address: Address
+    team: string
 }
 
 
 export interface EmployeeFormData {
-    employee_id?: uuid;
-    company_id?: uuid;
+    employee_id?: string;
+    company_id?: string;
     first_name: string;
     last_name: string;
     gross_salary?: number;
@@ -35,7 +38,18 @@ export interface EmployeeFormData {
     office?: string;
     role?: Role;
     staff_number: string;
+    social_security: string
+    contract_type: string
+    job_title: string
     address?: Address
+    address_line_1: string;
+    address_line_2: string
+    city: string
+    postcode: string
+    country: string
+    phone_number: string
+    nationality: string
+
 }
 
 export interface Department {
@@ -45,12 +59,31 @@ export interface Department {
 }
 
 export interface Address {
-    line1: string;
-    line2: string
+    address_line_1: string;
+    address_line_2: string
     city: string
     postcode: string
     country: string
 }
+
+export const team = [
+    {text: 'Dream team', value: 'dreat-team'},
+    {text: 'Benfica', value: 'benfica'},
+]
+
+export const jobTitle = [
+    {text: 'Developer', value: 'developer'},
+    {text: 'HR analyst', value: 'hr-analyst'},
+]
+
+export const contract = [
+    {text: 'Full-time', value: 'full-tine'},
+    {text: 'Part-time', value: 'part-time'},
+    {text: 'Fixed-term', value: 'fixed-term'},
+    {text: 'Hourly', value: 'hourly'},
+]
+
+
 
 
 export interface Role {

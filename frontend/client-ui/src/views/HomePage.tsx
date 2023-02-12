@@ -2,8 +2,7 @@ import { createBrowserHistory } from "history";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import {
+ import {
     Container,
     Header,
     Segment,
@@ -20,12 +19,12 @@ interface IProps {
 
 const HomePage: React.FC<IProps> = () => {
     const { modalStore, userStore } = useStore();
-    const history = useNavigate();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         if (userStore.isLoggedIn)
-            history('dashboard')
+            navigate('dashboard')
 
     }, [userStore.isLoggedIn])
 

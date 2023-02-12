@@ -14,7 +14,7 @@ def main(event, _):
     table = dynamodb.Table(os.environ.get('TABLE_NAME'))
     companyId = 'COMP#f8905237-1510-420e-bf6b-0ec6b288dd2b'
     print(companyId)
-    index_name = 'CompanyEmployeesindex'
+    index_name = 'getEmployeesDataIndex'
     result = table.query(
         IndexName=index_name,
         KeyConditionExpression='PK = :partitionValue',

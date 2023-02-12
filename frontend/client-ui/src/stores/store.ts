@@ -8,6 +8,7 @@ import OfficeStore from "./OfficeStore";
 import RoleStore from "./RoleStore";
 import UserStore from "./UserStore";
 import CompanyStore from "./CompanyStore";
+import SideDrawerStore from "./SideDrawerStore";
 
 
 interface Store {
@@ -20,6 +21,7 @@ interface Store {
     departmentStore: DepartmentStore;
     officeStore: OfficeStore;
     companyStore: CompanyStore;
+    sideDrawerStore: SideDrawerStore;
 }
 
 export const store: Store = {
@@ -31,7 +33,8 @@ export const store: Store = {
     layoutStore: new LayoutStore(),
     roleStore: new RoleStore(),
     departmentStore: new DepartmentStore(),
-    officeStore: new OfficeStore()
+    officeStore: new OfficeStore(),
+    sideDrawerStore: new SideDrawerStore()
 }
 
 export const StoreContext = createContext(store);

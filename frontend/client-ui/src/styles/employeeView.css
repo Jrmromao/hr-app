@@ -1,0 +1,7 @@
+.sidebar{
+
+}
+
+.ui[class*="very wide"].left.sidebar, .ui[class*="very wide"].right.sidebar {
+    width: 50% !important;
+}

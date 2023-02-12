@@ -1,19 +1,22 @@
 import React from 'react';
 import {useField} from "formik";
 import {Form, Label, Select} from "semantic-ui-react";
+import {boolean} from "yup";
 
 interface Props {
     placeholder: string;
     name: string;
     options: any;
     label?: string;
+
+    required?: boolean
     
 }
 
 export default function MySelectInput(props: Props) {
     const [field, meta, helpers] = useField(props.name);
     return (
-        <Form.Field error={meta.touched && !!meta.error}>
+        <Form.Field error={meta.touched && !!meta.error} required={props.required}>
             <label>{props.label}</label>
             <Select
                 
@@ -23,6 +26,7 @@ export default function MySelectInput(props: Props) {
                 onChange={(e, d) => helpers.setValue(d.value)}
                 onBlur={() => helpers.setTouched(true)}
                 placeholder={props.placeholder}
+                required={props.required}
             />
             {meta.touched && meta.error ? (
                 <Label basic color='red'>{meta.error}</Label>

@@ -19,6 +19,7 @@ import WorkplacesView from '../views/WorkplacesView';
 import ActiveLogView from '../views/ActiveLogView';
 import toast, {Toaster} from 'react-hot-toast';
 import ProfileView from "../views/ProfileView";
+import EmployeeProfileView from "../views/EmployeeProfileView";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
                         <Route path='dashboard' element={<ProfileView/>}/>
                         <Route path='profile' element={<ProfileView/>}/>
                         <Route path='manage-employees' element={<ManageEmployeeView/>}/>
+                        <Route path='manage-employees/employee-profile/:employeeId' element={<EmployeeProfileView/>}/>
                         <Route path='manage-company' element={<ManageCompanyView/>}/>
                         <Route path='manage-company/work-schedule' element={<WorkScheduleView/>}/>
                         <Route path='manage-company/active-log' element={<ActiveLogView/>}/>

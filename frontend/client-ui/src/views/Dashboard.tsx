@@ -19,23 +19,6 @@ export default observer(function Dashboard() {
     const [del, setDel] = useState('')
 
 
-    useEffect(() => {
-
-
-        employeeStore.create({
-            first_name: 'Joao',
-            last_name: 'Romao',
-            gross_salary: 100000,
-            email_address: 'joao@gmail.com',
-            staff_number: '123L'
-
-        }).then(res => setCreate(res))
-
-        companyStore.list().then(res => setList(res!))
-        companyStore.update('').then(res => setUpdate(res))
-        companyStore.delete().then(res => setDel(res))
-
-    }, [employeeStore, companyStore, setList, setUpdate, setCreate, setDel])
 
     return (
         <MainLayout>

@@ -16,7 +16,7 @@ export default class EmployeeStore {
     refreshTokenTimeout: any;
     employeeList: Employee[] = []
 
-    empLoadingFlag: boolean = false
+    formSubmitted: boolean = false
 
     constructor() {
         makeAutoObservable(this);
@@ -33,15 +33,23 @@ export default class EmployeeStore {
         try {
 
 
+            console.log(data)
+            data.address = {
+                address_line_1: data.address_line_1,
+                address_line_2: data.address_line_2,
+                city: data.city,
+                postcode: data.postcode,
+                country: data.country
+            }
             const result = await agent.employee.create(data);
-
             if (result) {
-                store.modalStore.closeModal();
-                await this.list(data.company_id as string)
+                 await this.list(data.company_id as string)
+                await store.sideDrawerStore.close();
 
             }
+            return result
 
-            return result;
+
         } catch (error) {
             console.log(error);
         }
@@ -68,4 +76,7 @@ export default class EmployeeStore {
 
         return;
     };
+
+
+
 }
